@@ -1,0 +1,2235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>陈彩钰 · 个人简历作品集</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --lime: #d4ff35;
+            --lime-soft: #eaff8a;
+            --bg: #f7f7f5;
+            --bg-warm: #f0efe9;
+            --dark: #111111;
+            --muted: #5a5a5a;
+            --light-muted: #888;
+            --card: #ffffff;
+            --border: rgba(17, 17, 17, 0.08);
+            --radius: 22px;
+            --radius-sm: 14px;
+            --nav-h: 72px;
+            --serif: "Noto Serif SC", "Songti SC", "SimSun", serif;
+            --sans: "DM Sans", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        }
+        html,
+        body {
+            height: 100%;
+        }
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--dark);
+            line-height: 1.75;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(17, 17, 17, 0.04) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-h);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(247, 247, 245, 0.82);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.4s, box-shadow 0.4s;
+        }
+        .navbar.scrolled {
+            box-shadow: 0 2px 24px rgba(17, 17, 17, 0.04);
+        }
+        .logo {
+            position: absolute;
+            left: 2.5rem;
+            font-family: var(--serif);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--dark);
+            cursor: pointer;
+            letter-spacing: 0.02em;
+            transition: transform 0.3s ease, color 0.25s;
+        }
+        .logo:hover {
+            color: var(--muted);
+            transform: scale(1.04);
+        }
+        .nav-links {
+            display: flex;
+            gap: 0.25rem;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 0.3rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+        }
+        .nav-btn {
+            position: relative;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--muted);
+            background: transparent;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, box-shadow 0.3s ease;
+            white-space: nowrap;
+            font-family: var(--sans);
+            letter-spacing: 0.02em;
+            overflow: hidden;
+        }
+        .nav-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        .nav-btn:hover {
+            transform: translateY(-2px) scale(1.04);
+            color: var(--dark);
+            box-shadow: 0 4px 16px rgba(17, 17, 17, 0.08);
+        }
+        .nav-btn[data-page="education"]:hover::before,
+        .nav-btn[data-page="education"].active::before {
+            background: #c8f060;
+            opacity: 1;
+        }
+        .nav-btn[data-page="internship"]:hover::before,
+        .nav-btn[data-page="internship"].active::before {
+            background: #ffe066;
+            opacity: 1;
+        }
+        .nav-btn[data-page="projects"]:hover::before,
+        .nav-btn[data-page="projects"].active::before {
+            background: #a8e6cf;
+            opacity: 1;
+        }
+        .nav-btn[data-page="portfolio"]:hover::before,
+        .nav-btn[data-page="portfolio"].active::before {
+            background: #d4b5ff;
+            opacity: 1;
+        }
+        .nav-btn.active {
+            color: var(--dark);
+            font-weight: 600;
+            transform: translateY(-1px);
+        }
+        .page {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+        .page.active {
+            display: block;
+        }
+        .page-deco {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+        }
+        .page-deco-circle {
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 255, 53, 0.25);
+            top: 8%;
+            right: -80px;
+        }
+        .page-deco-photo {
+            width: 180px;
+            height: 220px;
+            border-radius: var(--radius-sm);
+            object-fit: cover;
+            box-shadow: 0 16px 40px rgba(17, 17, 17, 0.1);
+            transform: rotate(6deg);
+            bottom: 10%;
+            left: -40px;
+            opacity: 0.35;
+        }
+        .page-inner {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: calc(var(--nav-h) + 3.5rem) 2rem 5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .page-header {
+            margin-bottom: 3rem;
+            animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .page-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--dark);
+            background: var(--lime);
+            padding: 0.3rem 0.85rem;
+            border-radius: 999px;
+            margin-bottom: 1.2rem;
+        }
+        .page-title {
+            font-family: var(--serif);
+            font-size: clamp(2.4rem, 6vw, 3.6rem);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+        }
+        .page-subtitle {
+            margin-top: 0.75rem;
+            font-size: 1rem;
+            color: var(--muted);
+            font-weight: 400;
+            max-width: 520px;
+        }
+        #page-home {
+            min-height: 100vh;
+            display: none;
+            position: relative;
+            overflow: hidden;
+            background: #ececec;
+        }
+        #page-home.active {
+            display: block;
+        }
+        .home-hero-wrap {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: calc(var(--nav-h) + 2.5rem) 2rem 3rem;
+            position: relative;
+            z-index: 2;
+        }
+        .home-float-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .home-float-dot {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.55;
+            animation: floatDot 7s ease-in-out infinite;
+        }
+        .home-float-dot-1 {
+            width: 14px;
+            height: 14px;
+            background: #7b5cff;
+            top: 18%;
+            left: 12%;
+            animation-delay: 0s;
+        }
+        .home-float-dot-2 {
+            width: 10px;
+            height: 10px;
+            background: var(--lime);
+            top: 28%;
+            right: 15%;
+            animation-delay: 1.2s;
+        }
+        .home-float-dot-3 {
+            width: 18px;
+            height: 18px;
+            background: #2ec4d4;
+            bottom: 22%;
+            left: 18%;
+            animation-delay: 2.4s;
+        }
+        .home-float-dot-4 {
+            width: 8px;
+            height: 8px;
+            background: #9b6dff;
+            top: 55%;
+            right: 22%;
+            animation-delay: 0.8s;
+        }
+        .home-float-ring {
+            position: absolute;
+            border: 2px solid rgba(123, 92, 255, 0.25);
+            border-radius: 50%;
+            animation: spinSlow 18s linear infinite;
+        }
+        .home-float-ring-1 {
+            width: 120px;
+            height: 120px;
+            top: 12%;
+            right: 8%;
+        }
+        .home-float-ring-2 {
+            width: 80px;
+            height: 80px;
+            bottom: 15%;
+            left: 6%;
+            border-color: rgba(46, 196, 212, 0.3);
+            animation-direction: reverse;
+            animation-duration: 14s;
+        }
+        .home-float-cross {
+            position: absolute;
+            font-size: 1.4rem;
+            color: rgba(212, 255, 53, 0.7);
+            font-weight: 300;
+            animation: gentleFloat 4s ease-in-out infinite;
+        }
+        .home-float-cross-1 {
+            top: 20%;
+            left: 8%;
+            animation-delay: 0.3s;
+        }
+        .home-float-cross-2 {
+            bottom: 25%;
+            right: 10%;
+            animation-delay: 1.5s;
+            color: rgba(123, 92, 255, 0.5);
+        }
+        .home-hero-top {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+            animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .home-hero-visual {
+            position: relative;
+            max-width: 680px;
+            width: 100%;
+            z-index: 2;
+            animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+        }
+        .home-hero-visual img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: var(--radius);
+            box-shadow: 0 28px 64px rgba(17, 17, 17, 0.14);
+            animation: heroImageFloat 5s ease-in-out infinite;
+        }
+        .home-name-overlay {
+            position: absolute;
+            top: -1.2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--serif);
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 900;
+            color: var(--dark);
+            background: var(--lime);
+            padding: 0.35rem 1.4rem;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(212, 255, 53, 0.45);
+            white-space: nowrap;
+            animation: namePulse 3s ease-in-out infinite;
+            letter-spacing: 0.08em;
+        }
+        .home-hero-bottom {
+            margin-top: 2.5rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            animation: fadeUp 0.8s ease 0.4s both;
+        }
+        .home-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(123, 92, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(46, 196, 212, 0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+        }
+        .home-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: calc(var(--nav-h) + 2rem) 3rem 3rem 4rem;
+            position: relative;
+            z-index: 2;
+        }
+        .home-right {
+            position: relative;
+            overflow: hidden;
+            min-height: 50vh;
+        }
+        .home-photo-main {
+            position: absolute;
+            inset: 8% 5% 8% 0;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 24px 60px rgba(17, 17, 17, 0.12);
+        }
+        .home-photo-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .home-photo-main::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(212, 255, 53, 0.25) 0%, rgba(17, 17, 17, 0.05) 100%);
+        }
+        .home-photo-float {
+            position: absolute;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            box-shadow: 0 12px 32px rgba(17, 17, 17, 0.15);
+            z-index: 3;
+            animation: gentleFloat 5s ease-in-out infinite;
+        }
+        .home-photo-float img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .home-photo-float-1 {
+            width: 130px;
+            height: 160px;
+            top: 12%;
+            left: -20px;
+            transform: rotate(-8deg);
+            animation-delay: 0.5s;
+        }
+        .home-photo-float-2 {
+            width: 110px;
+            height: 130px;
+            bottom: 18%;
+            right: 8%;
+            transform: rotate(10deg);
+            animation-delay: 1.2s;
+        }
+        .cute-float {
+            position: absolute;
+            pointer-events: none;
+            z-index: 5;
+            font-size: 2rem;
+            animation: cuteFloat 6s ease-in-out infinite;
+            opacity: 0.8;
+            user-select: none;
+        }
+        .cute-float:nth-child(1) {
+            top: 6%;
+            left: 10%;
+            font-size: 2.4rem;
+            animation-delay: 0s;
+            animation-duration: 5.5s;
+        }
+        .cute-float:nth-child(2) {
+            top: 18%;
+            right: 4%;
+            font-size: 1.8rem;
+            animation-delay: 1.2s;
+            animation-duration: 6.8s;
+        }
+        .cute-float:nth-child(3) {
+            bottom: 30%;
+            left: 2%;
+            font-size: 2.2rem;
+            animation-delay: 2.4s;
+            animation-duration: 5.2s;
+        }
+        .cute-float:nth-child(4) {
+            bottom: 12%;
+            right: 2%;
+            font-size: 2.6rem;
+            animation-delay: 0.6s;
+            animation-duration: 7s;
+        }
+        .cute-float:nth-child(5) {
+            top: 45%;
+            left: 6%;
+            font-size: 1.6rem;
+            animation-delay: 1.8s;
+            animation-duration: 6.2s;
+        }
+        .cute-float:nth-child(6) {
+            bottom: 42%;
+            right: 14%;
+            font-size: 1.4rem;
+            animation-delay: 3s;
+            animation-duration: 5.8s;
+        }
+        .cute-float:nth-child(7) {
+            top: 8%;
+            left: 45%;
+            font-size: 1.2rem;
+            animation-delay: 0.3s;
+            animation-duration: 7.5s;
+        }
+        .cute-float:nth-child(8) {
+            bottom: 8%;
+            left: 30%;
+            font-size: 1.8rem;
+            animation-delay: 1.5s;
+            animation-duration: 6.5s;
+        }
+        @keyframes cuteFloat {
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+            25% {
+                transform: translateY(-12px) rotate(6deg) scale(1.05);
+            }
+            50% {
+                transform: translateY(-6px) rotate(-4deg) scale(1.1);
+            }
+            75% {
+                transform: translateY(-16px) rotate(8deg) scale(1.02);
+            }
+        }
+        .home-blob {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            top: 8%;
+            left: 5%;
+            background: linear-gradient(135deg, rgba(123, 92, 255, 0.2), rgba(46, 196, 212, 0.15));
+            border-radius: 50%;
+            filter: blur(50px);
+            animation: morphBlob 12s ease-in-out infinite;
+            z-index: 0;
+        }
+        .home-blob-2 {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            bottom: 10%;
+            right: 8%;
+            background: rgba(212, 255, 53, 0.25);
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: morphBlob 10s ease-in-out infinite reverse;
+            z-index: 0;
+        }
+        .home-deco-text {
+            position: absolute;
+            bottom: 12%;
+            left: 8%;
+            font-family: var(--serif);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1;
+            letter-spacing: -0.03em;
+            pointer-events: none;
+            user-select: none;
+            z-index: 4;
+            text-shadow: 0 2px 20px rgba(17, 17, 17, 0.2);
+        }
+        .home-sticker {
+            position: absolute;
+            top: 20%;
+            right: 15%;
+            width: 56px;
+            height: 56px;
+            background: var(--lime);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            z-index: 5;
+            animation: spinSlow 12s linear infinite;
+            box-shadow: 0 4px 16px rgba(212, 255, 53, 0.5);
+        }
+        .home-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--light-muted);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.1s forwards;
+        }
+        .home-name {
+            font-family: var(--serif);
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            opacity: 0;
+            animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+        }
+        .home-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 2.2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.55s forwards;
+        }
+        .keyword {
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--dark);
+            background: var(--card);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            animation: gentleFloat 4s ease-in-out infinite;
+        }
+        .keyword:hover {
+            background: var(--lime);
+            border-color: var(--lime);
+            transform: translateY(-2px);
+        }
+        .keyword:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        .keyword:nth-child(3) {
+            animation-delay: 1s;
+        }
+        .keyword:nth-child(4) {
+            animation-delay: 1.5s;
+        }
+        .keyword:nth-child(5) {
+            animation-delay: 2s;
+        }
+        .home-cursor-line {
+            margin-top: 2.5rem;
+            font-size: 1.05rem;
+            color: var(--muted);
+            min-height: 1.6em;
+            font-weight: 400;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeIn 0.5s ease 0.9s forwards;
+        }
+        .home-cursor-line .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: var(--dark);
+            margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: blink 0.8s step-end infinite;
+        }
+        .home-scroll-hint {
+            margin-top: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.75rem;
+            color: var(--light-muted);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeIn 0.6s ease 1.4s forwards;
+        }
+        .scroll-line {
+            width: 40px;
+            height: 1px;
+            background: var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        .scroll-line::after {
+            content: "";
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--lime);
+            animation: scrollSlide 2s ease-in-out infinite;
+        }
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 2rem 2.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+            animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(17, 17, 17, 0.06);
+        }
+        .card-top {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .card-school {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        .card-degree {
+            font-size: 0.875rem;
+            color: var(--muted);
+            margin-top: 0.3rem;
+            font-weight: 400;
+        }
+        .card-meta {
+            text-align: right;
+            font-size: 0.82rem;
+            color: var(--light-muted);
+        }
+        .card-gpa {
+            display: inline-block;
+            font-weight: 600;
+            color: var(--dark);
+            background: var(--lime);
+            padding: 0.2rem 0.65rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            margin-bottom: 0.35rem;
+        }
+        .card-block {
+            margin-top: 1.2rem;
+        }
+        .card-block-title {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--light-muted);
+            margin-bottom: 0.65rem;
+        }
+        .course-list {
+            list-style: none;
+        }
+        .course-item {
+            padding: 0.85rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .course-item:last-child {
+            border-bottom: none;
+        }
+        .course-cn {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        .course-sub {
+            font-size: 0.78rem;
+            color: var(--light-muted);
+            margin-top: 0.28rem;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+        .course-en {
+            font-size: 0.78rem;
+            color: var(--light-muted);
+            margin-top: 0.28rem;
+            line-height: 1.65;
+            font-weight: 400;
+        }
+        .course-image {
+            margin-top: 0.65rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        .badge-link {
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.25s, border-color 0.25s, transform 0.25s;
+        }
+        .badge-link:hover {
+            background: var(--lime);
+            border-color: var(--lime);
+            transform: translateY(-2px);
+        }
+        .badge-link::after {
+            content: " →";
+            opacity: 0.6;
+        }
+        .course-pdf-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: 0.55rem;
+        }
+        .pdf-chip {
+            padding: 0.28rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--dark);
+            background: var(--bg-warm);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            cursor: pointer;
+            font-family: var(--sans);
+            transition: background 0.25s, border-color 0.25s, transform 0.25s;
+        }
+        .pdf-chip:hover {
+            background: var(--lime);
+            border-color: var(--lime);
+            transform: translateY(-1px);
+        }
+        .pdf-open-link {
+            display: inline-block;
+            margin-top: 0.75rem;
+            font-size: 0.82rem;
+            color: var(--muted);
+            text-decoration: underline;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: var(--sans);
+        }
+        .pdf-open-link:hover {
+            color: var(--dark);
+        }
+        .card-list {
+            list-style: none;
+            counter-reset: list-item;
+        }
+        .card-list li {
+            font-size: 0.88rem;
+            color: var(--muted);
+            padding: 0.45rem 0 0.45rem 2rem;
+            position: relative;
+            counter-increment: list-item;
+            line-height: 1.7;
+        }
+        .card-list li::before {
+            content: counter(list-item);
+            position: absolute;
+            left: 0;
+            top: 0.55rem;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--lime);
+            color: var(--dark);
+            font-size: 0.68rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .badge {
+            display: inline-block;
+            font-size: 0.8rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: var(--radius-sm);
+            background: var(--bg-warm);
+            color: var(--dark);
+            margin: 0.3rem 0.4rem 0.3rem 0;
+            border: 1px solid var(--border);
+            line-height: 1.5;
+        }
+        .sub-card {
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg-warm) 100%);
+            border-radius: var(--radius-sm);
+            padding: 1.3rem 1.5rem;
+            margin-top: 0.75rem;
+            border: 1px solid var(--border);
+            transition: border-color 0.3s;
+        }
+        .sub-card:hover {
+            border-color: var(--lime);
+        }
+        .sub-card-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.4rem;
+        }
+        .sub-card-desc {
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+        .sub-card-image {
+            width: 100%;
+            margin-top: 0.85rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            display: block;
+        }
+        .sub-card-action {
+            margin-top: 0.85rem;
+        }
+        .sub-card-action .pdf-chip {
+            display: inline-block;
+        }
+        .wechat-article-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(17, 17, 17, 0.06);
+        }
+        .wechat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .wechat-article-title {
+            font-family: var(--serif);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .wechat-article-desc {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.75;
+            max-width: 520px;
+            margin: 0 auto 1.5rem;
+        }
+        .wechat-open-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 2rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--dark);
+            background: var(--lime);
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            font-family: var(--sans);
+            text-decoration: none;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+        .wechat-open-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(212, 255, 53, 0.45);
+        }
+        .wechat-note {
+            margin-top: 1.2rem;
+            font-size: 0.78rem;
+            color: var(--light-muted);
+        }
+        .timeline {
+            position: relative;
+        }
+        .timeline-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.75rem;
+            padding: 2rem 2.2rem;
+        }
+        .timeline-num {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--lime);
+            color: var(--dark);
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--serif);
+            margin-top: 0.15rem;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .timeline-card:hover .timeline-num {
+            transform: scale(1.12) rotate(-6deg);
+        }
+        .timeline-body {
+            flex: 1;
+            min-width: 0;
+        }
+        .timeline-body .card-top {
+            margin-bottom: 1rem;
+        }
+        .page-inner-wide {
+            max-width: 780px;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1.1rem;
+            margin-bottom: 2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--muted);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            cursor: pointer;
+            font-family: var(--sans);
+            transition: all 0.25s ease;
+        }
+        .back-btn:hover {
+            color: var(--dark);
+            background: var(--lime);
+            border-color: var(--lime);
+            transform: translateX(-3px);
+        }
+        .work-viewer {
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(17, 17, 17, 0.06);
+        }
+        .work-viewer img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .work-meta {
+            padding: 1.2rem 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+        .work-meta strong {
+            color: var(--dark);
+            font-weight: 600;
+        }
+        .pdf-viewer-wrap {
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            height: calc(100vh - var(--nav-h) - 160px);
+            min-height: 500px;
+        }
+        .pdf-viewer-wrap iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .page-banner {
+            width: 100%;
+            height: 200px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 2.5rem;
+            position: relative;
+            animation: fadeUp 0.7s ease both;
+        }
+        .page-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .page-banner::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(247, 247, 245, 0.9) 0%, transparent 60%);
+        }
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .project-card-full {
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+            animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .project-card-full:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(17, 17, 17, 0.07);
+        }
+        .project-card-full:nth-child(2) {
+            animation-delay: 0.08s;
+        }
+        .project-card-full:nth-child(3) {
+            animation-delay: 0.16s;
+        }
+        .project-card-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.8rem 2rem 0;
+        }
+        .project-card-title {
+            font-family: var(--serif);
+            font-size: 1.2rem;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+        .project-card-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 0.25rem 0.7rem;
+            border-radius: 999px;
+            background: var(--lime);
+            color: var(--dark);
+            margin-top: 0.45rem;
+        }
+        .project-link {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--light-muted);
+            text-decoration: none;
+            margin-top: 0.45rem;
+            word-break: break-all;
+            transition: color 0.2s;
+        }
+        .project-link:hover {
+            color: var(--dark);
+            text-decoration: underline;
+        }
+        .project-card-body {
+            padding: 1.2rem 2rem 1.8rem;
+        }
+        .project-card-desc {
+            font-size: 0.88rem;
+            color: var(--muted);
+            line-height: 1.75;
+        }
+        .project-stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .project-stat-chip {
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            background: var(--bg-warm);
+            border: 1px solid var(--border);
+            color: var(--dark);
+        }
+        .media-block {
+            margin-top: 1.2rem;
+            padding: 1.2rem 1.4rem;
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg-warm) 100%);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+        .media-block-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+        .media-block-id {
+            font-size: 0.78rem;
+            color: var(--light-muted);
+            margin-bottom: 0.6rem;
+        }
+        .media-block ul {
+            list-style: none;
+        }
+        .media-block li {
+            font-size: 0.85rem;
+            color: var(--muted);
+            padding: 0.25rem 0 0.25rem 1rem;
+            position: relative;
+            line-height: 1.65;
+        }
+        .media-block li::before {
+            content: "·";
+            position: absolute;
+            left: 0;
+            color: var(--lime);
+            font-weight: 700;
+        }
+        .project-action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+        .video-slot {
+            background: var(--card);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .video-slot video {
+            width: 100%;
+            display: block;
+            background: #000;
+            aspect-ratio: 9/16;
+            object-fit: contain;
+        }
+        .video-slot-info {
+            padding: 1rem 1.2rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+        .video-slot-info strong {
+            display: block;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+        .video-placeholder {
+            aspect-ratio: 9/16;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-warm);
+            color: var(--light-muted);
+            font-size: 0.82rem;
+            text-align: center;
+            padding: 1.5rem;
+            line-height: 1.6;
+        }
+        .bilibili-embed {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #000;
+        }
+        .bilibili-embed iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .bilibili-embed.wide {
+            aspect-ratio: 16 / 9;
+        }
+        .card-action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.2rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+        .external-link-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.45rem 0.9rem;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--dark);
+            background: var(--bg-warm);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            cursor: pointer;
+            font-family: var(--sans);
+            text-decoration: none;
+            transition: background 0.25s, border-color 0.25s, transform 0.25s;
+        }
+        .external-link-chip:hover {
+            background: var(--lime);
+            border-color: var(--lime);
+            transform: translateY(-1px);
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+        }
+        .project-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+            animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 56px rgba(17, 17, 17, 0.08);
+        }
+        .project-visual {
+            height: 160px;
+            position: relative;
+            overflow: hidden;
+        }
+        .project-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .project-card:hover .project-visual img {
+            transform: scale(1.06);
+        }
+        .project-visual::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(17, 17, 17, 0.3), transparent);
+        }
+        .project-visual-icon {
+            position: absolute;
+            bottom: 1rem;
+            right: 1.2rem;
+            font-size: 2rem;
+            z-index: 1;
+        }
+        .project-body {
+            padding: 1.5rem 1.6rem 1.8rem;
+        }
+        .project-title {
+            font-family: var(--serif);
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.35;
+        }
+        .project-desc {
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+        .project-stat {
+            margin-top: 1rem;
+            display: inline-block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--dark);
+            background: var(--lime);
+            padding: 0.35rem 0.9rem;
+            border-radius: 999px;
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.1rem;
+        }
+        .portfolio-item {
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+            animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+            cursor: default;
+        }
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 48px rgba(17, 17, 17, 0.07);
+        }
+        .portfolio-thumb {
+            height: 140px;
+            position: relative;
+            overflow: hidden;
+        }
+        .portfolio-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .portfolio-item:hover .portfolio-thumb img {
+            transform: scale(1.08);
+        }
+        .portfolio-thumb-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            background: rgba(212, 255, 53, 0.15);
+        }
+        .portfolio-info {
+            padding: 1rem 1.2rem 1.3rem;
+        }
+        .portfolio-name {
+            font-family: var(--serif);
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .portfolio-tag {
+            display: inline-block;
+            margin-top: 0.35rem;
+            font-size: 0.72rem;
+            color: var(--light-muted);
+            letter-spacing: 0.04em;
+        }
+        .accent-strip {
+            height: 4px;
+            background: linear-gradient(90deg, var(--lime) 0%, var(--lime-soft) 50%, transparent 100%);
+            border-radius: 2px;
+            margin-bottom: 2.5rem;
+            animation: fadeUp 0.6s ease both;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes gentleFloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+        @keyframes morphBlob {
+            0%,
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.15) rotate(10deg);
+            }
+        }
+        @keyframes spinSlow {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+        @keyframes scrollSlide {
+            0% {
+                left: -100%;
+            }
+            50% {
+                left: 0;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        @keyframes floatDot {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.55;
+            }
+            50% {
+                transform: translate(12px, -18px) scale(1.15);
+                opacity: 0.85;
+            }
+        }
+        @keyframes heroImageFloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+        @keyframes namePulse {
+            0%,
+            100% {
+                box-shadow: 0 8px 24px rgba(212, 255, 53, 0.45);
+            }
+            50% {
+                box-shadow: 0 12px 32px rgba(212, 255, 53, 0.65);
+            }
+        }
+        @media (max-width: 900px) {
+            .home-hero-wrap {
+                padding: calc(var(--nav-h) + 1.5rem) 1.5rem 2rem;
+            }
+            .home-hero-visual {
+                max-width: 100%;
+            }
+            .home-name-overlay {
+                font-size: 1.5rem;
+                top: -0.8rem;
+            }
+            .page-deco-photo {
+                display: none;
+            }
+        }
+        @media (max-width: 640px) {
+            .logo {
+                left: 1.2rem;
+                font-size: 0.95rem;
+            }
+            .nav-links {
+                padding: 0.2rem;
+                gap: 0.1rem;
+            }
+            .nav-btn {
+                padding: 0.38rem 0.65rem;
+                font-size: 0.72rem;
+            }
+            .page-inner {
+                padding: calc(var(--nav-h) + 2rem) 1.2rem 3rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+            .card-top {
+                flex-direction: column;
+            }
+            .card-meta {
+                text-align: left;
+            }
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .timeline-card {
+                gap: 1.2rem;
+                padding: 1.5rem;
+            }
+            .timeline-num {
+                width: 34px;
+                height: 34px;
+                font-size: 0.78rem;
+            }
+            .page-banner {
+                height: 140px;
+            }
+            .cute-float {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAV ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="logo" id="logo">陈彩钰</div>
+        <div class="nav-links">
+            <button class="nav-btn" data-page="education">教育经历</button>
+            <button class="nav-btn" data-page="internship">实习经历</button>
+            <button class="nav-btn" data-page="projects">项目经历</button>
+        </div>
+    </nav>
+
+    <!-- ===== HOME ===== -->
+    <section class="page active" id="page-home">
+        <div class="home-pattern"></div>
+        <div class="home-left">
+            <p class="home-label">Portfolio · 2026</p>
+            <h1 class="home-name">陈彩钰</h1>
+            <div class="home-keywords">
+                <span class="keyword">内容运营</span>
+                <span class="keyword">新媒体增长</span>
+                <span class="keyword">视频策划</span>
+                <span class="keyword">直播运营</span>
+                <span class="keyword">数据驱动</span>
+            </div>
+            <p class="home-cursor-line">
+                <span id="typewriter"></span><span class="cursor"></span>
+            </p>
+            <div class="home-scroll-hint">
+                <span class="scroll-line"></span>
+                <span>Explore</span>
+            </div>
+        </div>
+        <div class="home-right">
+            <div class="cute-float">⭐</div>
+            <div class="cute-float">❤️</div>
+            <div class="cute-float">🌸</div>
+            <div class="cute-float">🌈</div>
+            <div class="cute-float">☁️</div>
+            <div class="cute-float">✨</div>
+            <div class="cute-float">🦋</div>
+            <div class="cute-float">🌻</div>
+
+            <div class="home-blob"></div>
+            <div class="home-photo-main">
+                <img src="首页的图.png" alt="首页视觉" />
+            </div>
+            <div class="home-photo-float home-photo-float-1">
+                <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400&q=80" alt="新媒体" />
+            </div>
+            <div class="home-photo-float home-photo-float-2">
+                <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&q=80" alt="内容创作" />
+            </div>
+            <div class="home-sticker">✦</div>
+            <div class="home-deco-text">Create<br />Grow</div>
+        </div>
+    </section>
+
+    <!-- ===== EDUCATION（横幅已删除） ===== -->
+    <section class="page" id="page-education">
+        <div class="page-deco page-deco-circle"></div>
+        <div class="page-inner">
+            <!-- 原本的 page-banner 已删除 -->
+            <div class="accent-strip"></div>
+            <div class="page-header">
+                <span class="page-tag">Education</span>
+                <h2 class="page-title">教育经历</h2>
+                <p class="page-subtitle">从传播理论到新媒体实践。</p>
+            </div>
+
+            <!-- 香港浸会大学 -->
+            <article class="card">
+                <div class="card-top">
+                    <div>
+                        <div class="card-school">香港浸会大学</div>
+                        <div class="card-degree">互动媒体硕士</div>
+                    </div>
+                    <div class="card-meta">
+                        <div class="card-gpa">GPA 3.56 / 4.0</div>
+                        <div>2025.7 -- 2026.10</div>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <div class="card-block-title">相关课程</div>
+                    <ul class="course-list">
+                        <li class="course-item">
+                            <div class="course-cn">消费者洞察</div>
+                            <div class="course-sub">Consumer Insight</div>
+                        </li>
+                        <li class="course-item">
+                            <div class="course-cn">媒体与传播大数据分析</div>
+                            <div class="course-sub">Python、Bloomberg exercises</div>
+                        </li>
+                        <li class="course-item">
+                            <div class="course-cn">互动媒体叙事与分镜设计</div>
+                            <div class="course-sub">Spanning user insight mining, GTM strategy formulation, creative asset production, and product launch presentation --- delivering a full-stack product marketing lifecycle.</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-block">
+                    <div class="card-block-title">获奖情况</div>
+                    <span class="badge">获传理学院三等奖学金</span>
+                </div>
+            </article>
+
+            <!-- 广东外语外贸大学 -->
+            <article class="card">
+                <div class="card-top">
+                    <div>
+                        <div class="card-school">广东外语外贸大学</div>
+                        <div class="card-degree">网络与新媒体学士</div>
+                    </div>
+                    <div class="card-meta">
+                        <div class="card-gpa">GPA 3.73 / 4.0</div>
+                        <div>2021.9 -- 2025.7</div>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <div class="card-block-title">相关课程</div>
+                    <ul class="course-list">
+                        <li class="course-item">
+                            <div class="course-cn">数据与信息化可视化（实训）</div>
+                            <div class="course-sub">PowerBI</div>
+                            <div class="course-pdf-row">
+                                <button type="button" class="pdf-chip" onclick="window.open('https://b23.tv/RbSZBT8','_blank')">观看视频作品 →</button>
+                                <button type="button" class="pdf-chip" data-page="data-viz">查看可视化图片 →</button>
+                            </div>
+                        </li>
+                        <li class="course-item">
+                            <div class="course-cn">网页设计与制作</div>
+                            <div class="course-sub">DreamWeaver</div>
+                        </li>
+                        <li class="course-item">
+                            <div class="course-cn">网络舆情监测和研判</div>
+                            <div class="course-sub">八爪鱼、后羿爬取器</div>
+                        </li>
+                        <li class="course-item">
+                            <div class="course-cn">3D 动画技术</div>
+                            <div class="course-sub">Cinema 4D</div>
+                        </li>
+                        <li class="course-item">
+                            <div class="course-cn">新媒体产品创意与实践（实训）</div>
+                            <div class="course-pdf-row">
+                                <button type="button" class="pdf-chip" onclick="showPdf('xmt-product-practice-1.pdf', '新媒体产品创意与实践 · 产出一', 'education')">查看产出 ①</button>
+                                <button type="button" class="pdf-chip" onclick="showPdf('xmt-product-practice-2.pdf', '新媒体产品创意与实践 · 产出二', 'education')">查看产出 ②</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-block">
+                    <div class="card-block-title">获奖情况</div>
+                    <button type="button" class="badge badge-link" onclick="showPdf('ad-art-competition-2023.pdf', '2023年第十五届全国大学生广告艺术大赛广东赛区策划案类二等奖', 'education')">2023年第十五届全国大学生广告艺术大赛广东赛区策划案类二等奖</button>
+                    <button type="button" class="badge badge-link" data-page="datajournalism">第八届中国数据新闻大赛四分之一决赛入围</button>
+                </div>
+                <div class="card-block">
+                    <div class="card-block-title">校园经历</div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">摄影协会 · 副会长兼宣传组组长</div>
+                        <p class="sub-card-desc">统筹规划并高效执行 50+ 成员参与的大型活动与工作坊，负责整体方案策划、多渠道矩阵宣传及现场调度。</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">新闻与传播学院宣传部 · 成员</div>
+                        <p class="sub-card-desc">主导学院核心活动的海报与展板设计，视觉化呈现活动亮点，显著提升线下活动曝光率与到场率。</p>
+                        <div class="sub-card-action">
+                            <button type="button" class="pdf-chip" data-page="education-publicity">查看设计作品 →</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ===== INTERNSHIP（横幅已删除） ===== -->
+    <section class="page" id="page-internship">
+        <img class="page-deco page-deco-photo" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400&q=80" alt="" />
+        <div class="page-inner">
+            <!-- 原本的 page-banner 已删除 -->
+            <div class="accent-strip"></div>
+            <div class="page-header">
+                <span class="page-tag">Experience</span>
+                <h2 class="page-title">实习经历</h2>
+                <p class="page-subtitle">从传媒到互联网，在真实业务中打磨内容增长能力。</p>
+            </div>
+            <div class="timeline">
+
+                <!-- 01 大公文汇 -->
+                <article class="card timeline-card">
+                    <span class="timeline-num">01</span>
+                    <div class="timeline-body">
+                        <div class="card-top">
+                            <div>
+                                <div class="card-school">香港大公文汇传媒集团</div>
+                                <div class="card-degree">融媒部实习生</div>
+                            </div>
+                            <div class="card-meta">2026.5 -- 2026.6</div>
+                        </div>
+                        <ul class="card-list">
+                            <li>负责微博及 Facebook 账号矩阵日常内容运营，执行热点监测与舆情研判，完成新闻资讯二次加工与跨平台分发，保障账号日均更新频次 4--8 条</li>
+                            <li>独立完成新闻短讯撰写、标题提炼及图文排版，运用 Canva / 剪映完成图文及视频内容创作，单条视频最高阅读量突破 3 万</li>
+                            <li>全流程跟进「第三届香港优秀师德师风奖评选活动」视频策划与制作，协同资深记者完成多场高规格采访拍摄任务（含香港特首拍摄），交付多条宣传素材</li>
+                        </ul>
+                        <div class="card-action-row">
+                            <button type="button" class="pdf-chip" data-page="internship-dagongwen">查看新媒体运营示例</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 02 香港学生会 -->
+                <article class="card timeline-card">
+                    <span class="timeline-num">02</span>
+                    <div class="timeline-body">
+                        <div class="card-top">
+                            <div>
+                                <div class="card-school">香港学生会内地生联合会</div>
+                                <div class="card-degree">活动与推广运营实习生</div>
+                            </div>
+                            <div class="card-meta">2026.3 -- 2026.5</div>
+                        </div>
+                        <ul class="card-list">
+                            <li>独立统筹「IANG Happy Hour」活动全流程执行，负责活动策划、宣发物料设计、用户触达及现场管理，通过分层运营机制确保活动出勤率</li>
+                            <li>跨部门协同宣传部完成公众号内容策划与发布，独立撰写并排版 4 篇推文，视觉设计能力获部门领导认可</li>
+                            <li>运用小红书进行活动精准推广，单篇笔记实现 1,715 次浏览、65 次互动，转化 28 名用户参与活动</li>
+                        </ul>
+                        <div class="card-action-row">
+                            <button type="button" class="pdf-chip" data-page="internship-hksu">查看公众号推文</button>
+                            <a href="https://mp.weixin.qq.com/s/aI2HQMFFF7xNQFjPWkIOJg" target="_blank" rel="noopener" class="external-link-chip">微信打开 ↗</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 03 BIGO -->
+                <article class="card timeline-card">
+                    <span class="timeline-num">03</span>
+                    <div class="timeline-body">
+                        <div class="card-top">
+                            <div>
+                                <div class="card-school">广州 BIGO 科技有限公司</div>
+                                <div class="card-degree">TikTok 内容运营实习生</div>
+                            </div>
+                            <div class="card-meta">2024.4 -- 2024.6</div>
+                        </div>
+                        <ul class="card-list">
+                            <li>负责 Hello 语音产品抖音渠道增长策略，基于目标用户画像制定内容投放方案，独立完成从选题策划、内容生产到效果复盘的全链路闭环</li>
+                            <li>搭建内容效果数据监控体系，持续追踪播放量、完播率、互动率等核心指标，通过 A/B 测试优化内容呈现形式，为目标用户转化率提升提供数据支撑</li>
+                            <li>建立竞品分析框架，系统研究同类产品内容策略与用户触达方式，提炼可复用的增长方法论并推动落地</li>
+                        </ul>
+                        <div class="card-action-row">
+                            <button type="button" class="pdf-chip" data-page="internship-bigo">观看代表作品</button>
+                            <a href="https://www.bilibili.com/video/BV1zi421S7ix/" target="_blank" rel="noopener" class="external-link-chip">B 站打开 ↗</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 04 华图教育 -->
+                <article class="card timeline-card">
+                    <span class="timeline-num">04</span>
+                    <div class="timeline-body">
+                        <div class="card-top">
+                            <div>
+                                <div class="card-school">华图教育科技有限公司广州分公司</div>
+                                <div class="card-degree">内容运营与直播运营实习生</div>
+                            </div>
+                            <div class="card-meta">2023.10 -- 2023.12</div>
+                        </div>
+                        <ul class="card-list">
+                            <li>负责直播运营全流程执行，主导制作宣传物料与直播分镜脚本，搭建并复盘实时数据看板，单场直播峰值同时在线 12,500 人、累计获赞 32.1 万，打造 KA 级直播场次</li>
+                            <li>沉淀视频制作 SOP 规范，基于用户画像与竞品调研制定视频类 SOP，被部门采纳并推广使用</li>
+                            <li>搭建并运营私域社群，维护 200--300 人核心用户群，通过直播引导、问题解答等方式保障社群活跃度，有效支撑直播流量转化</li>
+                        </ul>
+                        <div class="card-action-row">
+                            <button type="button" class="pdf-chip" data-page="internship-huatu">观看代表作品</button>
+                            <a href="https://www.bilibili.com/video/BV1RRNL6EExJ/" target="_blank" rel="noopener" class="external-link-chip">B 站打开 ↗</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 05 羊城晚报 -->
+                <article class="card timeline-card">
+                    <span class="timeline-num">05</span>
+                    <div class="timeline-body">
+                        <div class="card-top">
+                            <div>
+                                <div class="card-school">羊城晚报报业集团</div>
+                                <div class="card-degree">「羊城派」编辑实习生</div>
+                            </div>
+                            <div class="card-meta">2023.5 -- 2023.7</div>
+                        </div>
+                        <ul class="card-list">
+                            <li>负责「羊城派」客户端在 B 站、视频号、抖音三大平台内容分发策略，基于各平台用户特征与算法逻辑，制定差异化的标题、封面及发布时间策略</li>
+                            <li>实习期间内容累计播放量突破 1,000 万，其中单条视频播放量达 720 万、点赞超 2 万</li>
+                            <li>参与平台推荐算法机制研究，优化内容分发策略，提升优质内容曝光率与推荐命中率</li>
+                        </ul>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section class="page" id="page-projects">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <div class="page-header">
+                <span class="page-tag">Projects</span>
+                <h2 class="page-title">项目经历</h2>
+                <p class="page-subtitle">从量化工具到产品方案，从自媒体运营到商业变现。</p>
+            </div>
+            <div class="project-list">
+
+                <!-- 跨市场量化回测系统 -->
+                <article class="project-card-full">
+                    <div class="project-card-head">
+                        <div>
+                            <h3 class="project-card-title">跨市场量化回测系统</h3>
+                            <span class="project-card-tag">Python</span>
+                            <a href="https://github.com/caiyuchen980-hash/cross-market-trading-backtester" target="_blank" rel="noopener" class="project-link">github.com/caiyuchen980-hash/cross-market-trading-backtester</a>
+                        </div>
+                    </div>
+                    <div class="project-card-body">
+                        <p class="project-card-desc">本项目基于 Python 构建了一套跨市场量化回测工具，面向缺乏专业分析工具的零售投资者，帮助其以低成本、透明化的方式测试和比较不同交易策略的有效性。系统通过 yfinance 库实时获取美股、港股、A 股三大市场各 50 只代表性股票的三年期日频数据，采用滚动回测（Walk-Forward）方法消除前视偏差，以 Pandas 处理数据、Matplotlib 进行可视化，集成了 MACD、RSI、均线通道、均线振荡器及买入持有五种策略。实证结果显示，买入持有策略在美股市场表现最优（平均收益 147%），而 RSI、MACD 等主动策略在波动较大的港股与 A 股市场中更具优势。项目同时整合期权情绪分析（Max Pain、PCR、IV），为用户提供多维度决策参考。</p>
+                        <div class="project-stats-row">
+                            <span class="project-stat-chip">美股 · 港股 · A 股</span>
+                            <span class="project-stat-chip">5 种策略回测</span>
+                            <span class="project-stat-chip">Walk-Forward 消除前视偏差</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- DEAl 智能约拍平台 -->
+                <article class="project-card-full">
+                    <div class="project-card-head">
+                        <div>
+                            <h3 class="project-card-title">DEAl 智能约拍平台</h3>
+                            <span class="project-card-tag">产品设计</span>
+                        </div>
+                    </div>
+                    <div class="project-card-body">
+                        <p class="project-card-desc">本项目打造了一款 AI 驱动的约拍平台，解决用户在小红书、微信等多平台间碎片化预约、匹配效率低、信任机制缺失等痛点。产品功能涵盖 AI 个性化摄影师匹配、便捷预约、透明定价及紧急求助等亮点功能。团队完成了市场调研、竞品分析、用户访谈、目标画像构建、原型设计与可用性测试等全流程，并根据真实用户反馈进行了多轮迭代优化，最终产出一站式轻松约拍的 APP 方案，帮助 2 亿+ 目标用户高效完成从发现到交易的约拍闭环。</p>
+                        <div class="project-stats-row">
+                            <span class="project-stat-chip">AI 摄影师匹配</span>
+                            <span class="project-stat-chip">全流程产品方案</span>
+                            <span class="project-stat-chip">可用性测试迭代</span>
+                        </div>
+                        <div class="project-action-row">
+                            <button type="button" class="pdf-chip" data-page="project-deal">观看演示视频</button>
+                            <a href="https://www.bilibili.com/video/BV1mEME6HE6W/" target="_blank" rel="noopener" class="external-link-chip">B 站打开 ↗</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 自媒体经历 -->
+                <article class="project-card-full">
+                    <div class="project-card-head">
+                        <div>
+                            <h3 class="project-card-title">自媒体经历</h3>
+                            <span class="project-card-tag">抖音运营 · 直播带货</span>
+                        </div>
+                    </div>
+                    <div class="project-card-body">
+                        <div class="media-block">
+                            <div class="media-block-title">（1）抖音本地生活类账号</div>
+                            <div class="media-block-id">抖音号：87767809</div>
+                            <ul>
+                                <li>跟本人母亲从 0 到 1 搭建本地生活抖音账号，本人负责账号运营、母亲出镜拍摄，聚焦本地生活赛道进行内容策划与运营，单条视频最高播放量 4.7 万，单条视频最高成功实现商业化转化 156 单</li>
+                                <li>与 MCN 机构合作开展酒旅产品（酒店住宿 + 景点玩乐套餐）直播带货，累计合作十余场，单场 GMV 最高达 22,500 元、单场成交 112 单，跑通了从公域流量获取到电商变现的完整闭环</li>
+                            </ul>
+                            <div class="project-action-row">
+                                <button type="button" class="pdf-chip" data-page="project-media-local">观看代表作品</button>
+                                <a href="https://www.bilibili.com/video/BV1spME6UEb2/" target="_blank" rel="noopener" class="external-link-chip">B 站打开 ↗</a>
+                            </div>
+                        </div>
+                        <div class="media-block">
+                            <div class="media-block-title">（2）游戏分享账号</div>
+                            <div class="media-block-id">抖音号：36006825934</div>
+                            <ul>
+                                <li>单条视频最高浏览量 3 万，781 个赞</li>
+                            </ul>
+                            <div class="project-action-row">
+                                <button type="button" class="pdf-chip" data-page="project-media-game">观看代表作品</button>
+                                <a href="https://www.bilibili.com/video/BV11pME6UEs8/" target="_blank" rel="noopener" class="external-link-chip">B 站打开 ↗</a>
+                            </div>
+                        </div>
+                        <div class="project-stats-row">
+                            <span class="project-stat-chip">4.7 万播放 · 156 单转化</span>
+                            <span class="project-stat-chip">单场 GMV ¥22,500</span>
+                            <span class="project-stat-chip">3 万播放 · 781 赞</span>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 子页面：本地生活视频 ===== -->
+    <section class="page" id="page-project-media-local">
+        <div class="page-inner page-inner-wide">
+            <button type="button" class="back-btn" data-page="projects">← 返回项目经历</button>
+            <div class="page-header">
+                <span class="page-tag">Self-media</span>
+                <h2 class="page-title">本地生活类账号 · 代表作品</h2>
+                <p class="page-subtitle">抖音号 87767809 · 单条最高 4.7 万播放 · 156 单商业化转化</p>
+            </div>
+            <div class="video-slot">
+                <div class="bilibili-embed">
+                    <iframe src="https://player.bilibili.com/player.html?bvid=BV1spME6UEb2&page=1&high_quality=1&danmaku=0&autoplay=0&muted=1" allowfullscreen="true"></iframe>
+                </div>
+                <div class="video-slot-info">
+                    <strong>抖音本地生活类账号代表作品</strong>
+                    视频托管于 B 站，若无法播放可
+                    <a href="https://www.bilibili.com/video/BV1spME6UEb2/" target="_blank" rel="noopener">点击前往 B 站观看</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 子页面：游戏分享视频 ===== -->
+    <section class="page" id="page-project-media-game">
+        <div class="page-inner page-inner-wide">
+            <button type="button" class="back-btn" data-page="projects">← 返回项目经历</button>
+            <div class="page-header">
+                <span class="page-tag">Self-media</span>
+                <h2 class="page-title">游戏分享账号 · 代表作品</h2>
+                <p class="page-subtitle">抖音号 36006825934 · 单条最高 3 万浏览 · 781 赞</p>
+            </div>
+            <div class="video-slot">
+                <div class="bilibili-embed">
+                    <iframe src="https://player.bilibili.com/player.html?bvid=BV11pME6UEs8&page=1&high_quality=1&danmaku=0&autoplay=0&muted=1" allowfullscreen="true"></iframe>
+                </div>
+                <div class="video-slot-info">
+                    <strong>游戏分享账号代表作品</strong>
+                    视频托管于 B 站，若无法播放可
+                    <a href="https://www.bilibili.com/video/BV11pME6UEs8/" target="_blank" rel="noopener">点击前往 B 站观看</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 子页面：DEAl 项目演示视频 ===== -->
+    <section class="page" id="page-project-deal">
+        <div class="page-inner page-inner-wide">
+            <button type="button" class="back-btn" data-page="projects">← 返回项目经历</button>
+            <div class="page-header">
+                <span class="page-tag">Product</span>
+                <h2 class="page-title">DEAl 智能约拍平台 · 演示视频</h2>
+                <p class="page-subtitle">AI 驱动的一站式约拍方案 · 全流程产品设计</p>
+            </div>
+            <div class="video-slot">
+                <div class="bilibili-embed">
+                    <iframe src="https://player.bilibili.com/player.html?bvid=BV1mEME6HE6W&page=1&high_quality=1&danmaku=0&autoplay=0&muted=1" allowfullscreen="true"></iframe>
+                </div>
+                <div class="video-slot-info">
+                    <strong>DEAl 智能约拍平台 · 产品演示</strong>
+                    视频托管于 B 站，若无法播放可
+                    <a href="https://www.bilibili.com/video/BV1mEME6HE6W/" target="_blank" rel="noopener">点击前往 B 站观看</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 子页面：华图教育实习作品 ===== -->
+    <section class="page" id="page-internship-huatu">
+        <div class="page-inner page-inner-wide">
+            <button type="button" class="back-btn" data-page="internship">← 返回实习经历</button>
+            <div class="page-header">
+                <span class="page-tag">Internship</span>
+                <h2 class="page-title">华图教育 · 内容运营与直播运营</h2>
+                <p class="page-subtitle">2023.10 -- 2023.12 · 直播运营 · 视频制作 · 代表作品</p>
+            </div>
+            <div class="video-slot">
+                <div class="bilibili-embed">
+                    <iframe src="https://player.bilibili.com/player.html?bvid=BV1RRNL6EExJ&page=1&high_quality=1&danmaku=0&autoplay=0&muted=1" allowfullscreen="true"></iframe>
+                </div>
+                <div class="video-slot-info">
+                    <strong>华图教育 · 内容运营代表作品</strong>
+                    视频托管于 B 站，若无法播放可
+                    <a href="https://www.bilibili.com/video/BV1RRNL6EExJ/" target="_blank" rel="noopener">点击前往 B 站观看</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 子页面：大公文汇新媒体运营示例 ===== -->
+    <section class="page" id="page-internship-dagongwen">
+        <div class="page-inner page-inner-wide">
+            <button type="button" class="back-btn" data-page="internship">← 返回实习经历</button>
+            <div class="page-header">
+                <span class="page-tag">Internship</span>
+                <h2 class="page-title">大公文汇 · YouTube/微博运营示例</h2>
+                <p class="page-subtitle">融媒部实习生 · 2026.5 -- 2026.6 · 新闻资讯跨平台分发</p>
+            </div>
+            <div class="work-viewer">
+                <img src="大公报图片.png" alt="新媒体运营示例" />
+                <div class="work-meta">
+                    <strong>运营案例</strong> · 微博及 Facebook 账号矩阵 · 新闻短讯撰写、图文排版及视频创作 · 单条视频最高 3 万+ 阅读量
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 子页面：数据可视化图片 ===== -->
+    <section class="page" id="page-data-viz">
+        <div class="page-inner page-inner-wide">
+            <button type="button" class="back-btn" data-page="education">← 返回教育经历</button>
+            <div class="page-header">
+                <span class="page-tag">Coursework</span>
+                <h2 class="page-title">数据与信息化可视化 · 作品</h2>
+                <p class="page-subtitle">PowerBI 可视化实训成果</p>
+            </div>
+            <div class="work-viewer">
+                <img src="数据.jpg" alt="数据可视化作品" />
+                <div class="work-meta">
+                    <strong>可视化作品</strong> · 数据与信息化可视化实训课程 · 使用 PowerBI 完成
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 子页面：香港学生会推文 ===== -->
+    <section class="page" id="page-internship-hksu">
+        <div class="page-inner page-inner-wide">
+            <button type="button" class="back-btn" data-page="internship">← 返回实习经历</button>
+            <div class="page-header">
+                <span class="page-tag">Internship</span>
+                <h2 class="page-title">香港学生会内地生联合会</h2>
+                <p class="page-subtitle">活动与推广运营实习生 · 2026.3 -- 2026.5 · 公众号推文代表作</p>
+            </div>
+            <div class="wechat-article-card">
+                <div class="wechat-icon">📱</div>
+                <h3 class="wechat-article-title">公众号推文代表作</h3>
+                <p class="wechat-article-desc">实习期间独立撰写并排版多篇活动推文，统筹「IANG Happy Hour」等活动宣发。以下为公众号发布的代表作品，点击下方按钮在微信或浏览器中阅读完整内容。</p>
+                <a href="https://mp.weixin.qq.com/s/aI2HQMFFF7xNQFjPWkIOJg" target="_blank" rel="noopener" class="wechat-open-btn">打开微信公众号文章</a>
+                <p class="wechat-note">微信公众号文章需在浏览器或微信中打开，无法在网页内直接嵌入预览</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 子页面：BIGO 视频 ===== -->
+    <section class="page" id="page-internship-bigo">
+        <div class="page-inner page-inner-wide">
+            <button type="button" class="back-btn" data-page="internship">← 返回实习经历</button>
+            <div class="page-header">
+                <span class="page-tag">Internship</span>
+                <h2 class="page-title">广州 BIGO 科技有限公司</h2>
+                <p class="page-subtitle">TikTok 内容运营实习生 · 2024.4 -- 2024.6 · Hello 语音抖音渠道代表作品</p>
+            </div>
+            <div class="video-slot">
+                <div class="bilibili-embed">
+                    <iframe src="https://player.bilibili.com/player.html?bvid=BV1zi421S7ix&page=1&high_quality=1&danmaku=0&autoplay=0&muted=1" allowfullscreen="true"></iframe>
+                </div>
+                <div class="video-slot-info">
+                    <strong>Hello 语音抖音渠道内容运营代表作品</strong>
+                    视频托管于 B 站，若无法播放可
+                    <a href="https://www.bilibili.com/video/BV1zi421S7ix/" target="_blank" rel="noopener">点击前往 B 站观看</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 子页面：宣传部设计作品 ===== -->
+    <section class="page" id="page-education-publicity">
+        <div class="page-inner page-inner-wide">
+            <button type="button" class="back-btn" data-page="education">← 返回教育经历</button>
+            <div class="page-header">
+                <span class="page-tag">Design</span>
+                <h2 class="page-title">新闻与传播学院宣传部 · 设计作品</h2>
+                <p class="page-subtitle">主导学院核心活动海报与展板设计 · 视觉化呈现活动亮点</p>
+            </div>
+            <div class="work-viewer">
+                <img src="海报.jpg" alt="广外新传学院宣传部设计作品" />
+                <div class="work-meta">
+                    <strong>设计作品展示</strong> · 广东外语外贸大学新闻与传播学院宣传部 · 活动海报与展板设计
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 子页面：数据新闻 ===== -->
+    <section class="page" id="page-datajournalism">
+        <div class="page-inner page-inner-wide">
+            <button type="button" class="back-btn" data-page="education">← 返回教育经历</button>
+            <div class="page-header">
+                <span class="page-tag">Data Journalism</span>
+                <h2 class="page-title">婚姻殿堂</h2>
+                <p class="page-subtitle">第八届中国数据新闻大赛 · 四分之一决赛入围作品</p>
+            </div>
+            <div class="wechat-article-card">
+                <div class="wechat-icon">📰</div>
+                <h3 class="wechat-article-title">婚姻殿堂</h3>
+                <p class="wechat-article-desc">以「门槛太高，我还是不去了」为切入点，通过民政部数据可视化呈现 2015--2021 年中国结婚率下降趋势，结合大学生婚恋意愿调查，探讨当代青年对婚姻的态度变迁。作品发布于微信公众号，点击下方按钮阅读完整内容。</p>
+                <a href="https://mp.weixin.qq.com/s/MsdfJ969hrIqBDdL1jhvIw" target="_blank" rel="noopener" class="wechat-open-btn">打开微信公众号文章</a>
+                <p class="wechat-note">微信公众号文章需在浏览器或微信中打开，无法在网页内直接嵌入预览</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PDF Viewer ===== -->
+    <section class="page" id="page-pdf">
+        <div class="page-inner">
+            <button type="button" class="back-btn" id="pdf-back-btn">← 返回</button>
+            <div class="page-header">
+                <span class="page-tag">Document</span>
+                <h2 class="page-title" id="pdf-title">课程资料</h2>
+            </div>
+            <div class="pdf-viewer-wrap">
+                <iframe id="pdf-frame" title="PDF 预览"></iframe>
+            </div>
+            <button type="button" class="pdf-open-link" id="pdf-open-tab">若无法预览，点击在新窗口打开 PDF</button>
+        </div>
+    </section>
+
+    <!-- ===== SCRIPT ===== -->
+    <script>
+        const pages = document.querySelectorAll(".page");
+        const navBtns = document.querySelectorAll(".nav-btn");
+        const navbar = document.getElementById("navbar");
+        let lastPage = "education";
+        const mainPages = ["home", "education", "internship", "projects"];
+
+        function showPage(name) {
+            if (mainPages.includes(name)) {
+                lastPage = name;
+                navBtns.forEach(btn => btn.classList.toggle("active", btn.dataset.page === name));
+            } else {
+                navBtns.forEach(btn => btn.classList.remove("active"));
+            }
+            pages.forEach(p => p.classList.toggle("active", p.id === "page-" + name));
+            window.scrollTo(0, 0);
+        }
+
+        function showPdf(src, title, returnPage) {
+            lastPage = returnPage || lastPage;
+            document.getElementById("pdf-frame").src = src;
+            document.getElementById("pdf-title").textContent = title || "课程资料";
+            document.getElementById("pdf-open-tab").onclick = () => window.open(src, "_blank");
+            navBtns.forEach(btn => btn.classList.remove("active"));
+            pages.forEach(p => p.classList.toggle("active", p.id === "page-pdf"));
+            window.scrollTo(0, 0);
+        }
+
+        navBtns.forEach(btn => btn.addEventListener("click", () => showPage(btn.dataset.page)));
+        document.getElementById("logo").addEventListener("click", () => showPage("home"));
+
+        document.querySelectorAll("[data-page]").forEach(el => {
+            if (el.classList.contains("nav-btn") || el.classList.contains("logo")) return;
+            el.addEventListener("click", () => showPage(el.dataset.page));
+        });
+
+        document.getElementById("pdf-back-btn").addEventListener("click", () => showPage(lastPage));
+
+        window.addEventListener("scroll", () => {
+            navbar.classList.toggle("scrolled", window.scrollY > 20);
+        }, { passive: true });
+
+        // 打字机
+        (function() {
+            const text = "用内容连接世界，用数据驱动增长";
+            const el = document.getElementById("typewriter");
+            let i = 0;
+
+            function type() {
+                if (i < text.length) {
+                    el.textContent += text.charAt(i++);
+                    setTimeout(type, 100);
+                }
+            }
+            setTimeout(type, 1200);
+        })();
+    </script>
+
+</body>
+</html>
