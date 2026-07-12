@@ -26,7 +26,7 @@
 
 ## 📬 联系我
 
-- 邮箱：13516600836@163.com 、chencaiyu4223@outlook.com (You can choose one at your convenience~
+- 邮箱：13516600836@163.com 、chencaiyu4223@outlook.com (You can choose one at your convenience~)
 - 小红书：小星Victoria
 -电话：13516600836
 
