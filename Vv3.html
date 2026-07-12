@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>陈彩钰 · 个人作品集</title>
+
+    <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/2bf40ab72ea4897a3fd9b6e48b233a19?family=Garamond" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: #fff;
+            background: #010101;
+            overflow-x: hidden;
+        }
+        .font-garamond {
+            font-family: 'Garamond', 'Times New Roman', serif;
+        }
+
+        /* ===== VIDEO BG ===== */
+        .video-bg {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: -2;
+        }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: rgba(0, 0, 0, 0.65);
+            transition: background 0.6s;
+        }
+
+        /* ===== NAV ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 1.5rem;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .brand {
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 300;
+            letter-spacing: 0.25em;
+            text-decoration: none;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .brand:hover {
+            opacity: 0.7;
+        }
+        .desktop-links {
+            display: none;
+            gap: 0.25rem;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 0.25rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .desktop-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 300;
+            font-size: 0.75rem;
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            transition: all 0.3s;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .desktop-links a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .desktop-links a.active {
+            color: #010101;
+            background: #d4ff35;
+            font-weight: 500;
+            box-shadow: 0 0 24px rgba(212, 255, 53, 0.3);
+        }
+        .hamburger {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+        }
+        .hamburger:hover {
+            color: #fff;
+        }
+        .hamburger svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu {
+            position: fixed;
+            top: 4.5rem;
+            left: 1rem;
+            right: 1rem;
+            z-index: 50;
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1.2rem;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .mobile-menu.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .mobile-menu .close-btn {
+            position: absolute;
+            top: 0.8rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        .mobile-menu .close-btn:hover {
+            color: #fff;
+        }
+        .mobile-menu a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 300;
+            font-size: 1rem;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(-6px);
+        }
+        .mobile-menu.active a {
+            animation: linkFadeIn 0.35s ease-out forwards;
+        }
+        @keyframes linkFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .mobile-menu a:hover {
+            color: #d4ff35;
+        }
+
+        /* ===== PAGE CONTAINER ===== */
+        .page {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 6rem 1.25rem 3rem;
+        }
+        .page.active {
+            display: flex;
+        }
+        .page-inner {
+            max-width: 920px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* ===== HOME ===== */
+        .hero-content {
+            padding-top: 2rem;
+            text-align: center;
+        }
+        .main-title {
+            color: #fff;
+            font-weight: 400;
+            line-height: 1.08;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            font-size: 2.8rem;
+        }
+        .main-title .line {
+            display: block;
+            overflow: hidden;
+        }
+        /* 新增：第二行缩小 */
+        .main-title .sub-line {
+            font-size: 0.45em;
+            font-weight: 300;
+            letter-spacing: 0.08em;
+        }
+        .char {
+            display: inline-block;
+            opacity: 0;
+            white-space: pre;
+        }
+        .char.visible {
+            animation: charFadeIn 0.3s ease-out forwards;
+        }
+        @keyframes charFadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        .home-sub {
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 300;
+            line-height: 1.6;
+            max-width: 28rem;
+            margin: 0 auto 1.5rem;
+            font-size: 0.95rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 1.4s forwards;
+        }
+        .home-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 1.8s forwards;
+        }
+        .keyword-pill {
+            padding: 0.35rem 1rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.04em;
+            transition: all 0.3s;
+        }
+        .keyword-pill:hover {
+            background: rgba(212, 255, 53, 0.15);
+            border-color: #d4ff35;
+            transform: translateY(-2px);
+        }
+        .cta-btn {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: none;
+            border-radius: 9999px;
+            padding: 0.75rem 1.8rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-weight: 300;
+            font-size: 0.8rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 2.2s forwards;
+            transition: background 0.3s, box-shadow 0.3s, transform 0.15s;
+            font-family: 'Geist', sans-serif;
+        }
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1.4px;
+            background: linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 30%,
+                    rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.1) 70%,
+                    rgba(255, 255, 255, 0.4) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        .cta-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 4px rgba(255, 255, 255, 0.2);
+        }
+        .cta-btn:active {
+            transform: scale(0.97);
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== PAGE HEADER ===== */
+        .page-header {
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.6s ease both;
+        }
+        .page-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #010101;
+            background: #d4ff35;
+            padding: 0.25rem 0.9rem;
+            border-radius: 999px;
+            margin-bottom: 0.8rem;
+        }
+        .page-title {
+            font-family: 'Garamond', 'Times New Roman', serif;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            color: #fff;
+        }
+        .page-subtitle {
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 300;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 1rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+            animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 50%, rgba(212, 255, 53, 0.05));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(212, 255, 53, 0.03);
+        }
+        .card-top {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .card-school {
+            font-family: 'Garamond', 'Times New Roman', serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #fff;
+            line-height: 1.3;
+        }
+        .card-degree {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.2rem;
+            font-weight: 300;
+        }
+        .card-meta {
+            text-align: right;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.5);
+            flex-shrink: 0;
+        }
+        .card-gpa {
+            display: inline-block;
+            font-weight: 500;
+            color: #010101;
+            background: #d4ff35;
+            padding: 0.15rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            margin-bottom: 0.25rem;
+        }
+        .card-block {
+            margin-top: 1rem;
+        }
+        .card-block-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 0.6rem;
+        }
+
+        /* ===== COURSE LIST ===== */
+        .course-list {
+            list-style: none;
+        }
+        .course-item {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .course-item:last-child {
+            border-bottom: none;
+        }
+        .course-cn {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.95);
+        }
+        .course-sub {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.2rem;
+            line-height: 1.6;
+        }
+        .badge {
+            display: inline-block;
+            font-size: 0.78rem;
+            padding: 0.25rem 0.8rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin: 0.2rem 0.3rem 0.2rem 0;
+            line-height: 1.5;
+            cursor: default;
+            transition: all 0.3s;
+        }
+        .badge-link {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .badge-link:hover {
+            background: rgba(212, 255, 53, 0.15);
+            border-color: #d4ff35;
+            transform: translateY(-1px);
+        }
+        .sub-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.75rem;
+            padding: 1rem 1.2rem;
+            margin-top: 0.6rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: border-color 0.3s;
+        }
+        .sub-card:hover {
+            border-color: rgba(212, 255, 53, 0.2);
+        }
+        .sub-card-title {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+        .sub-card-desc {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+        }
+
+        /* ===== TIMELINE ===== */
+        .timeline-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem 2rem;
+        }
+        .timeline-num {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #d4ff35;
+            color: #010101;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Garamond', serif;
+            margin-top: 0.1rem;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .timeline-card:hover .timeline-num {
+            transform: scale(1.1) rotate(-4deg);
+        }
+        .timeline-body {
+            flex: 1;
+            min-width: 0;
+        }
+        .card-list {
+            list-style: none;
+            counter-reset: li;
+        }
+        .card-list li {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.75);
+            padding: 0.35rem 0 0.35rem 1.8rem;
+            position: relative;
+            counter-increment: li;
+            line-height: 1.7;
+        }
+        .card-list li::before {
+            content: counter(li);
+            position: absolute;
+            left: 0;
+            top: 0.45rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(212, 255, 53, 0.15);
+            color: #d4ff35;
+            font-size: 0.6rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .pdf-chip {
+            padding: 0.25rem 0.8rem;
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            cursor: pointer;
+            font-family: 'Geist', sans-serif;
+            transition: all 0.25s;
+            letter-spacing: 0.04em;
+        }
+        .pdf-chip:hover {
+            background: rgba(212, 255, 53, 0.12);
+            border-color: #d4ff35;
+            transform: translateY(-1px);
+            color: #fff;
+        }
+        .external-link-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.25rem 0.8rem;
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            cursor: pointer;
+            font-family: 'Geist', sans-serif;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .external-link-chip:hover {
+            background: rgba(212, 255, 53, 0.12);
+            border-color: #d4ff35;
+            transform: translateY(-1px);
+            color: #fff;
+        }
+
+        /* ===== PROJECT CARDS ===== */
+        .project-card-full {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+            animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .project-card-full:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+        .project-card-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.5rem 2rem 0;
+        }
+        .project-card-title {
+            font-family: 'Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #fff;
+            line-height: 1.35;
+        }
+        .project-card-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.2rem 0.7rem;
+            border-radius: 999px;
+            background: #d4ff35;
+            color: #010101;
+            margin-top: 0.3rem;
+        }
+        .project-link {
+            display: block;
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            margin-top: 0.3rem;
+            word-break: break-all;
+            transition: color 0.2s;
+        }
+        .project-link:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .project-card-body {
+            padding: 1rem 2rem 1.8rem;
+        }
+        .project-card-desc {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.75;
+        }
+        .project-stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 1rem;
+        }
+        .project-stat-chip {
+            font-size: 0.7rem;
+            font-weight: 400;
+            padding: 0.2rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .media-block {
+            margin-top: 1rem;
+            padding: 1rem 1.2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .media-block-title {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 0.2rem;
+        }
+        .media-block-id {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 0.5rem;
+        }
+        .media-block ul {
+            list-style: none;
+        }
+        .media-block li {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.65);
+            padding: 0.2rem 0 0.2rem 1.2rem;
+            position: relative;
+            line-height: 1.65;
+        }
+        .media-block li::before {
+            content: "·";
+            position: absolute;
+            left: 0;
+            color: #d4ff35;
+            font-weight: 700;
+        }
+        .project-action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+
+        /* ===== CONTACT ===== */
+        .contact-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            max-width: 480px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .contact-item {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            transition: transform 0.3s, border-color 0.3s;
+            animation: fadeInUp 0.6s ease both;
+        }
+        .contact-item:hover {
+            transform: translateY(-2px);
+            border-color: rgba(212, 255, 53, 0.2);
+        }
+        .contact-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            width: 44px;
+            text-align: center;
+        }
+        .contact-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .contact-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 400;
+        }
+        .contact-value {
+            font-size: 0.95rem;
+            color: #fff;
+            word-break: break-all;
+            line-height: 1.5;
+            margin-top: 0.1rem;
+        }
+        .contact-value a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .contact-value a:hover {
+            color: #d4ff35;
+        }
+        .contact-item:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+        .contact-item:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+        .contact-item:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+        .contact-item:nth-child(4) {
+            animation-delay: 0.2s;
+        }
+        .contact-item:nth-child(5) {
+            animation-delay: 0.25s;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (min-width: 640px) {
+            .nav {
+                padding: 1.2rem 2rem;
+            }
+            .brand {
+                font-size: 1rem;
+                letter-spacing: 0.3em;
+            }
+            .main-title {
+                font-size: 4.5rem;
+            }
+            .home-sub {
+                font-size: 1.05rem;
+                max-width: 32rem;
+            }
+            .page-title {
+                font-size: 3rem;
+            }
+        }
+        @media (min-width: 768px) {
+            .hamburger {
+                display: none;
+            }
+            .desktop-links {
+                display: flex;
+            }
+            .mobile-menu {
+                display: none !important;
+            }
+            .main-title {
+                font-size: 6rem;
+            }
+            .card {
+                padding: 2rem 2.5rem;
+            }
+            .timeline-card {
+                padding: 2rem 2.5rem;
+            }
+            .project-card-head {
+                padding: 2rem 2.5rem 0;
+            }
+            .project-card-body {
+                padding: 1.2rem 2.5rem 2rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .main-title {
+                font-size: 8rem;
+            }
+        }
+        @media (max-width: 640px) {
+            .page {
+                padding: 5rem 0.8rem 2rem;
+            }
+            .card {
+                padding: 1.2rem;
+            }
+            .card-top {
+                flex-direction: column;
+            }
+            .card-meta {
+                text-align: left;
+            }
+            .timeline-card {
+                gap: 1rem;
+                padding: 1.2rem;
+                flex-direction: column;
+            }
+            .timeline-num {
+                margin-top: 0;
+            }
+            .project-card-head {
+                padding: 1.2rem 1.2rem 0;
+            }
+            .project-card-body {
+                padding: 0.8rem 1.2rem 1.4rem;
+            }
+            .contact-item {
+                padding: 1.2rem 1.4rem;
+            }
+            .main-title {
+                font-size: 2.4rem;
+            }
+            .home-keywords .keyword-pill {
+                font-size: 0.65rem;
+                padding: 0.25rem 0.7rem;
+            }
+        }
+
+        /* ===== UTILITY ===== */
+        .text-center {
+            text-align: center;
+        }
+        .mt-1 {
+            margin-top: 1rem;
+        }
+        .mt-2 {
+            margin-top: 2rem;
+        }
+        .mb-1 {
+            margin-bottom: 1rem;
+        }
+        .gap-1 {
+            gap: 1rem;
+        }
+        .flex-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .accent-strip {
+            height: 3px;
+            background: linear-gradient(90deg, #d4ff35, rgba(212, 255, 53, 0.2), transparent);
+            border-radius: 2px;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.6s ease both;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== VIDEO BG ===== -->
+    <video class="video-bg" autoplay muted loop playsinline>
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260619_191346_9d19d66e-86a4-47f7-8dc6-712c1788c3b2.mp4" type="video/mp4" />
+    </video>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ===== NAV ===== -->
+    <nav class="nav">
+        <a href="#" class="brand" id="brandLink">陈彩钰</a>
+        <div class="desktop-links" id="desktopLinks">
+            <a data-page="home" class="active">Home</a>
+            <a data-page="education">Education</a>
+            <a data-page="internship">Internship</a>
+            <a data-page="project">Project</a>
+            <a data-page="contact">Contact</a>
+        </div>
+        <button class="hamburger" id="menuToggle" aria-label="打开菜单">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+    </nav>
+
+    <!-- ===== MOBILE MENU ===== -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-btn" id="closeMenu" aria-label="关闭菜单">✕</button>
+        <a data-page="home">Home</a>
+        <a data-page="education">Education</a>
+        <a data-page="internship">Internship</a>
+        <a data-page="project">Project</a>
+        <a data-page="contact">Contact</a>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== HOME ===== -->
+    <!-- ============================================================ -->
+    <div class="page active" id="page-home">
+        <div class="page-inner">
+            <div class="hero-content">
+                <h1 class="main-title font-garamond" id="mainTitle">
+                    <span class="line" id="line1">陈彩钰</span>
+                    <span class="line sub-line" id="line2">内容 · 增长 · 叙事</span>
+                </h1>
+                <p class="home-sub">用内容连接世界，用数据驱动增长</p>
+                <div class="home-keywords">
+                    <span class="keyword-pill">内容运营</span>
+                    <span class="keyword-pill">新媒体增长</span>
+                    <span class="keyword-pill">视频策划</span>
+                    <span class="keyword-pill">直播运营</span>
+                    <span class="keyword-pill">数据驱动</span>
+                </div>
+                <button class="cta-btn" id="exploreBtn">探索作品</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== EDUCATION ===== -->
+    <!-- ============================================================ -->
+    <div class="page" id="page-education">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <div class="page-header">
+                <span class="page-tag">Education</span>
+                <h2 class="page-title">教育经历</h2>
+                <p class="page-subtitle">从传播理论到新媒体实践。</p>
+            </div>
+
+            <!-- 香港浸会大学 -->
+            <div class="card">
+                <div class="card-top">
+                    <div>
+                        <div class="card-school">香港浸会大学</div>
+                        <div class="card-degree">互动媒体硕士</div>
+                    </div>
+                    <div class="card-meta">
+                        <div class="card-gpa">GPA 3.56 / 4.0</div>
+                        <div>2025.7 – 2026.10</div>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <div class="card-block-title">相关课程</div>
+                    <ul class="course-list">
+                        <li class="course-item">
+                            <div class="course-cn">消费者洞察</div>
+                            <div class="course-sub">Consumer Insight</div>
+                        </li>
+                        <li class="course-item">
+                            <div class="course-cn">媒体与传播大数据分析</div>
+                            <div class="course-sub">Python、Bloomberg exercises</div>
+                        </li>
+                        <li class="course-item">
+                            <div class="course-cn">互动媒体叙事与分镜设计</div>
+                            <div class="course-sub">Spanning user insight mining, GTM strategy formulation, creative asset production, and product launch presentation — delivering a full-stack product marketing lifecycle.</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-block">
+                    <div class="card-block-title">获奖情况</div>
+                    <span class="badge">获传理学院三等奖学金</span>
+                </div>
+            </div>
+
+            <!-- 广东外语外贸大学 -->
+            <div class="card">
+                <div class="card-top">
+                    <div>
+                        <div class="card-school">广东外语外贸大学</div>
+                        <div class="card-degree">网络与新媒体学士</div>
+                    </div>
+                    <div class="card-meta">
+                        <div class="card-gpa">GPA 3.73 / 4.0</div>
+                        <div>2021.9 – 2025.7</div>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <div class="card-block-title">相关课程</div>
+                    <ul class="course-list">
+                        <li class="course-item">
+                            <div class="course-cn">数据与信息化可视化（实训）</div>
+                            <div class="course-sub">PowerBI</div>
+                            <div class="flex-wrap" style="margin-top:0.4rem;">
+                                <span class="badge badge-link" onclick="window.open('https://b23.tv/RbSZBT8','_blank')">观看视频作品 →</span>
+                                <span class="badge badge-link" data-page="data-viz">查看可视化图片 →</span>
+                            </div>
+                        </li>
+                        <li class="course-item">
+                            <div class="course-cn">网页设计与制作</div>
+                            <div class="course-sub">DreamWeaver</div>
+                        </li>
+                        <li class="course-item">
+                            <div class="course-cn">网络舆情监测和研判</div>
+                            <div class="course-sub">八爪鱼、后羿爬取器</div>
+                        </li>
+                        <li class="course-item">
+                            <div class="course-cn">3D 动画技术</div>
+                            <div class="course-sub">Cinema 4D</div>
+                        </li>
+                        <li class="course-item">
+                            <div class="course-cn">新媒体产品创意与实践（实训）</div>
+                            <div class="flex-wrap" style="margin-top:0.4rem;">
+                                <span class="badge badge-link" onclick="showPdf('xmt-product-practice-1.pdf', '新媒体产品创意与实践 · 产出一', 'education')">查看产出 ①</span>
+                                <span class="badge badge-link" onclick="showPdf('xmt-product-practice-2.pdf', '新媒体产品创意与实践 · 产出二', 'education')">查看产出 ②</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-block">
+                    <div class="card-block-title">获奖情况</div>
+                    <span class="badge badge-link" onclick="showPdf('ad-art-competition-2023.pdf', '2023年第十五届全国大学生广告艺术大赛广东赛区策划案类二等奖', 'education')">2023年大广赛广东赛区策划案类二等奖</span>
+                    <span class="badge badge-link" data-page="datajournalism">第八届中国数据新闻大赛四分之一决赛入围</span>
+                </div>
+                <div class="card-block">
+                    <div class="card-block-title">校园经历</div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">摄影协会 · 副会长兼宣传组组长</div>
+                        <p class="sub-card-desc">统筹规划并高效执行 50+ 成员参与的大型活动与工作坊，负责整体方案策划、多渠道矩阵宣传及现场调度。</p>
+                    </div>
+                    <div class="sub-card">
+                        <div class="sub-card-title">新闻与传播学院宣传部 · 成员</div>
+                        <p class="sub-card-desc">主导学院核心活动的海报与展板设计，视觉化呈现活动亮点，显著提升线下活动曝光率与到场率。</p>
+                        <div class="flex-wrap" style="margin-top:0.5rem;">
+                            <span class="badge badge-link" data-page="education-publicity">查看设计作品 →</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== INTERNSHIP ===== -->
+    <!-- ============================================================ -->
+    <div class="page" id="page-internship">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <div class="page-header">
+                <span class="page-tag">Experience</span>
+                <h2 class="page-title">实习经历</h2>
+                <p class="page-subtitle">从传媒到互联网，在真实业务中打磨内容增长能力。</p>
+            </div>
+
+            <!-- 01 大公文汇 -->
+            <div class="card timeline-card">
+                <span class="timeline-num">01</span>
+                <div class="timeline-body">
+                    <div class="card-top">
+                        <div>
+                            <div class="card-school">香港大公文汇传媒集团</div>
+                            <div class="card-degree">融媒部实习生</div>
+                        </div>
+                        <div class="card-meta">2026.5 – 2026.6</div>
+                    </div>
+                    <ul class="card-list">
+                        <li>负责微博及 Facebook 账号矩阵日常内容运营，执行热点监测与舆情研判，完成新闻资讯二次加工与跨平台分发，保障账号日均更新频次 4–8 条</li>
+                        <li>独立完成新闻短讯撰写、标题提炼及图文排版，运用 Canva / 剪映完成图文及视频内容创作，单条视频最高阅读量突破 3 万</li>
+                        <li>全流程跟进「第三届香港优秀师德师风奖评选活动」视频策划与制作，协同资深记者完成多场高规格采访拍摄任务（含香港特首拍摄），交付多条宣传素材</li>
+                    </ul>
+                    <div class="card-action-row">
+                        <span class="pdf-chip" data-page="internship-dagongwen">查看新媒体运营示例</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 02 香港学生会 -->
+            <div class="card timeline-card">
+                <span class="timeline-num">02</span>
+                <div class="timeline-body">
+                    <div class="card-top">
+                        <div>
+                            <div class="card-school">香港学生会内地生联合会</div>
+                            <div class="card-degree">活动与推广运营实习生</div>
+                        </div>
+                        <div class="card-meta">2026.3 – 2026.5</div>
+                    </div>
+                    <ul class="card-list">
+                        <li>独立统筹「IANG Happy Hour」活动全流程执行，负责活动策划、宣发物料设计、用户触达及现场管理，通过分层运营机制确保活动出勤率</li>
+                        <li>跨部门协同宣传部完成公众号内容策划与发布，独立撰写并排版 4 篇推文，视觉设计能力获部门领导认可</li>
+                        <li>运用小红书进行活动精准推广，单篇笔记实现 1,715 次浏览、65 次互动，转化 28 名用户参与活动</li>
+                    </ul>
+                    <div class="card-action-row">
+                        <span class="pdf-chip" data-page="internship-hksu">查看公众号推文</span>
+                        <a href="https://mp.weixin.qq.com/s/aI2HQMFFF7xNQFjPWkIOJg" target="_blank" rel="noopener" class="external-link-chip">微信打开 ↗</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 03 BIGO -->
+            <div class="card timeline-card">
+                <span class="timeline-num">03</span>
+                <div class="timeline-body">
+                    <div class="card-top">
+                        <div>
+                            <div class="card-school">广州 BIGO 科技有限公司</div>
+                            <div class="card-degree">TikTok 内容运营实习生</div>
+                        </div>
+                        <div class="card-meta">2024.4 – 2024.6</div>
+                    </div>
+                    <ul class="card-list">
+                        <li>负责 Hello 语音产品抖音渠道增长策略，基于目标用户画像制定内容投放方案，独立完成从选题策划、内容生产到效果复盘的全链路闭环</li>
+                        <li>搭建内容效果数据监控体系，持续追踪播放量、完播率、互动率等核心指标，通过 A/B 测试优化内容呈现形式，为目标用户转化率提升提供数据支撑</li>
+                        <li>建立竞品分析框架，系统研究同类产品内容策略与用户触达方式，提炼可复用的增长方法论并推动落地</li>
+                    </ul>
+                    <div class="card-action-row">
+                        <span class="pdf-chip" data-page="internship-bigo">观看代表作品</span>
+                        <a href="https://www.bilibili.com/video/BV1zi421S7ix/" target="_blank" rel="noopener" class="external-link-chip">B 站打开 ↗</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 04 华图教育 -->
+            <div class="card timeline-card">
+                <span class="timeline-num">04</span>
+                <div class="timeline-body">
+                    <div class="card-top">
+                        <div>
+                            <div class="card-school">华图教育科技有限公司广州分公司</div>
+                            <div class="card-degree">内容运营与直播运营实习生</div>
+                        </div>
+                        <div class="card-meta">2023.10 – 2023.12</div>
+                    </div>
+                    <ul class="card-list">
+                        <li>负责直播运营全流程执行，主导制作宣传物料与直播分镜脚本，搭建并复盘实时数据看板，单场直播峰值同时在线 12,500 人、累计获赞 32.1 万，打造 KA 级直播场次</li>
+                        <li>沉淀视频制作 SOP 规范，基于用户画像与竞品调研制定视频类 SOP，被部门采纳并推广使用</li>
+                        <li>搭建并运营私域社群，维护 200–300 人核心用户群，通过直播引导、问题解答等方式保障社群活跃度，有效支撑直播流量转化</li>
+                    </ul>
+                    <div class="card-action-row">
+                        <span class="pdf-chip" data-page="internship-huatu">观看代表作品</span>
+                        <a href="https://www.bilibili.com/video/BV1RRNL6EExJ/" target="_blank" rel="noopener" class="external-link-chip">B 站打开 ↗</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 05 羊城晚报 -->
+            <div class="card timeline-card">
+                <span class="timeline-num">05</span>
+                <div class="timeline-body">
+                    <div class="card-top">
+                        <div>
+                            <div class="card-school">羊城晚报报业集团</div>
+                            <div class="card-degree">「羊城派」编辑实习生</div>
+                        </div>
+                        <div class="card-meta">2023.5 – 2023.7</div>
+                    </div>
+                    <ul class="card-list">
+                        <li>负责「羊城派」客户端在 B 站、视频号、抖音三大平台内容分发策略，基于各平台用户特征与算法逻辑，制定差异化的标题、封面及发布时间策略</li>
+                        <li>实习期间内容累计播放量突破 1,000 万，其中单条视频播放量达 720 万、点赞超 2 万</li>
+                        <li>参与平台推荐算法机制研究，优化内容分发策略，提升优质内容曝光率与推荐命中率</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== PROJECT ===== -->
+    <!-- ============================================================ -->
+    <div class="page" id="page-project">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <div class="page-header">
+                <span class="page-tag">Projects</span>
+                <h2 class="page-title">项目经历</h2>
+                <p class="page-subtitle">从量化工具到产品方案，从自媒体运营到商业变现。</p>
+            </div>
+
+            <!-- 跨市场量化回测系统 -->
+            <div class="project-card-full">
+                <div class="project-card-head">
+                    <div>
+                        <h3 class="project-card-title">跨市场量化回测系统</h3>
+                        <span class="project-card-tag">Python</span>
+                        <a href="https://github.com/caiyuchen980-hash/cross-market-trading-backtester" target="_blank" rel="noopener" class="project-link">github.com/caiyuchen980-hash/cross-market-trading-backtester</a>
+                    </div>
+                </div>
+                <div class="project-card-body">
+                    <p class="project-card-desc">基于 Python 构建跨市场量化回测工具，面向缺乏专业分析工具的零售投资者，帮助其以低成本、透明化的方式测试和比较不同交易策略的有效性。系统通过 yfinance 库实时获取美股、港股、A 股三大市场各 50 只代表性股票的三年期日频数据，采用滚动回测（Walk-Forward）方法消除前视偏差，集成了 MACD、RSI、均线通道、均线振荡器及买入持有五种策略。</p>
+                    <div class="project-stats-row">
+                        <span class="project-stat-chip">美股 · 港股 · A 股</span>
+                        <span class="project-stat-chip">5 种策略回测</span>
+                        <span class="project-stat-chip">Walk-Forward 消除前视偏差</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DEAl 智能约拍平台 -->
+            <div class="project-card-full">
+                <div class="project-card-head">
+                    <div>
+                        <h3 class="project-card-title">DEAl 智能约拍平台</h3>
+                        <span class="project-card-tag">产品设计</span>
+                    </div>
+                </div>
+                <div class="project-card-body">
+                    <p class="project-card-desc">打造 AI 驱动的约拍平台，解决用户在小红书、微信等多平台间碎片化预约、匹配效率低、信任机制缺失等痛点。产品功能涵盖 AI 个性化摄影师匹配、便捷预约、透明定价及紧急求助等亮点功能。团队完成了市场调研、竞品分析、用户访谈、目标画像构建、原型设计与可用性测试等全流程。</p>
+                    <div class="project-stats-row">
+                        <span class="project-stat-chip">AI 摄影师匹配</span>
+                        <span class="project-stat-chip">全流程产品方案</span>
+                        <span class="project-stat-chip">可用性测试迭代</span>
+                    </div>
+                    <div class="project-action-row">
+                        <span class="pdf-chip" data-page="project-deal">观看演示视频</span>
+                        <a href="https://www.bilibili.com/video/BV1mEME6HE6W/" target="_blank" rel="noopener" class="external-link-chip">B 站打开 ↗</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 自媒体经历 -->
+            <div class="project-card-full">
+                <div class="project-card-head">
+                    <div>
+                        <h3 class="project-card-title">自媒体经历</h3>
+                        <span class="project-card-tag">抖音运营 · 直播带货</span>
+                    </div>
+                </div>
+                <div class="project-card-body">
+                    <div class="media-block">
+                        <div class="media-block-title">（1）抖音本地生活类账号</div>
+                        <div class="media-block-id">抖音号：87767809</div>
+                        <ul>
+                            <li>跟本人母亲从 0 到 1 搭建本地生活抖音账号，本人负责账号运营、母亲出镜拍摄，聚焦本地生活赛道进行内容策划与运营，单条视频最高播放量 4.7 万，单条视频最高成功实现商业化转化 156 单</li>
+                            <li>与 MCN 机构合作开展酒旅产品（酒店住宿 + 景点玩乐套餐）直播带货，累计合作十余场，单场 GMV 最高达 22,500 元、单场成交 112 单，跑通了从公域流量获取到电商变现的完整闭环</li>
+                        </ul>
+                        <div class="project-action-row">
+                            <span class="pdf-chip" data-page="project-media-local">观看代表作品</span>
+                            <a href="https://www.bilibili.com/video/BV1spME6UEb2/" target="_blank" rel="noopener" class="external-link-chip">B 站打开 ↗</a>
+                        </div>
+                    </div>
+                    <div class="media-block">
+                        <div class="media-block-title">（2）游戏分享账号</div>
+                        <div class="media-block-id">抖音号：36006825934</div>
+                        <ul>
+                            <li>单条视频最高浏览量 3 万，781 个赞</li>
+                        </ul>
+                        <div class="project-action-row">
+                            <span class="pdf-chip" data-page="project-media-game">观看代表作品</span>
+                            <a href="https://www.bilibili.com/video/BV11pME6UEs8/" target="_blank" rel="noopener" class="external-link-chip">B 站打开 ↗</a>
+                        </div>
+                    </div>
+                    <div class="project-stats-row">
+                        <span class="project-stat-chip">4.7 万播放 · 156 单转化</span>
+                        <span class="project-stat-chip">单场 GMV ¥22,500</span>
+                        <span class="project-stat-chip">3 万播放 · 781 赞</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== CONTACT ===== -->
+    <!-- ============================================================ -->
+    <div class="page" id="page-contact">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <div class="page-header text-center">
+                <span class="page-tag">Contact</span>
+                <h2 class="page-title">联系我</h2>
+                <p class="page-subtitle">期待与你共创独特视觉故事。</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <div class="contact-info">
+                        <div class="contact-label">邮箱</div>
+                        <div class="contact-value"><a href="mailto:13516600836@163.com">13516600836@163.com</a></div>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-info">
+                        <div class="contact-label">邮箱</div>
+                        <div class="contact-value"><a href="mailto:chencaiyu4223@outlook.com">chencaiyu4223@outlook.com</a></div>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-info">
+                        <div class="contact-label">电话</div>
+                        <div class="contact-value"><a href="tel:13516600836">13516600836</a></div>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📕</div>
+                    <div class="contact-info">
+                        <div class="contact-label">小红书</div>
+                        <div class="contact-value">小星Victoria</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== SUB PAGES (内页) ===== -->
+    <!-- ============================================================ -->
+
+    <!-- 数据可视化 -->
+    <div class="page" id="page-data-viz">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <button class="pdf-chip" style="margin-bottom:1.5rem;" data-page="education">← 返回教育经历</button>
+            <div class="page-header">
+                <span class="page-tag">Coursework</span>
+                <h2 class="page-title">数据与信息化可视化 · 作品</h2>
+                <p class="page-subtitle">PowerBI 可视化实训成果</p>
+            </div>
+            <div style="background:rgba(20,20,20,0.7);border-radius:1rem;border:1px solid rgba(255,255,255,0.08);overflow:hidden;">
+                <img src="数据.jpg" alt="数据可视化作品" style="width:100%;display:block;" />
+                <div style="padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.82rem;color:rgba(255,255,255,0.5);">
+                    <strong style="color:rgba(255,255,255,0.8);">可视化作品</strong> · 数据与信息化可视化实训课程 · 使用 PowerBI 完成
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 数据新闻 -->
+    <div class="page" id="page-datajournalism">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <button class="pdf-chip" style="margin-bottom:1.5rem;" data-page="education">← 返回教育经历</button>
+            <div class="page-header">
+                <span class="page-tag">Data Journalism</span>
+                <h2 class="page-title">婚姻殿堂</h2>
+                <p class="page-subtitle">第八届中国数据新闻大赛 · 四分之一决赛入围作品</p>
+            </div>
+            <div style="background:rgba(20,20,20,0.7);border-radius:1rem;border:1px solid rgba(255,255,255,0.08);padding:2.5rem 2rem;text-align:center;">
+                <div style="font-size:3rem;margin-bottom:1rem;">📰</div>
+                <h3 style="font-family:'Garamond',serif;font-size:1.4rem;font-weight:400;margin-bottom:0.75rem;color:#fff;">婚姻殿堂</h3>
+                <p style="font-size:0.88rem;color:rgba(255,255,255,0.6);line-height:1.75;max-width:520px;margin:0 auto 1.5rem;">以「门槛太高，我还是不去了」为切入点，通过民政部数据可视化呈现 2015–2021 年中国结婚率下降趋势，结合大学生婚恋意愿调查，探讨当代青年对婚姻的态度变迁。</p>
+                <a href="https://mp.weixin.qq.com/s/MsdfJ969hrIqBDdL1jhvIw" target="_blank" rel="noopener" class="external-link-chip" style="font-size:0.85rem;padding:0.5rem 1.5rem;">打开微信公众号文章 ↗</a>
+                <p style="margin-top:1rem;font-size:0.72rem;color:rgba(255,255,255,0.3);">微信公众号文章需在浏览器或微信中打开</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 宣传部设计作品 -->
+    <div class="page" id="page-education-publicity">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <button class="pdf-chip" style="margin-bottom:1.5rem;" data-page="education">← 返回教育经历</button>
+            <div class="page-header">
+                <span class="page-tag">Design</span>
+                <h2 class="page-title">新闻与传播学院宣传部 · 设计作品</h2>
+                <p class="page-subtitle">主导学院核心活动海报与展板设计 · 视觉化呈现活动亮点</p>
+            </div>
+            <div style="background:rgba(20,20,20,0.7);border-radius:1rem;border:1px solid rgba(255,255,255,0.08);overflow:hidden;">
+                <img src="海报.jpg" alt="广外新传学院宣传部设计作品" style="width:100%;display:block;" />
+                <div style="padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.82rem;color:rgba(255,255,255,0.5);">
+                    <strong style="color:rgba(255,255,255,0.8);">设计作品展示</strong> · 广东外语外贸大学新闻与传播学院宣传部 · 活动海报与展板设计
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 大公文汇 -->
+    <div class="page" id="page-internship-dagongwen">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <button class="pdf-chip" style="margin-bottom:1.5rem;" data-page="internship">← 返回实习经历</button>
+            <div class="page-header">
+                <span class="page-tag">Internship</span>
+                <h2 class="page-title">大公文汇 · YouTube/微博运营示例</h2>
+                <p class="page-subtitle">融媒部实习生 · 2026.5 – 2026.6 · 新闻资讯跨平台分发</p>
+            </div>
+            <div style="background:rgba(20,20,20,0.7);border-radius:1rem;border:1px solid rgba(255,255,255,0.08);overflow:hidden;">
+                <img src="大公报图片.png" alt="新媒体运营示例" style="width:100%;display:block;" />
+                <div style="padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.82rem;color:rgba(255,255,255,0.5);">
+                    <strong style="color:rgba(255,255,255,0.8);">运营案例</strong> · 微博及 Facebook 账号矩阵 · 新闻短讯撰写、图文排版及视频创作 · 单条视频最高 3 万+ 阅读量
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 香港学生会 -->
+    <div class="page" id="page-internship-hksu">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <button class="pdf-chip" style="margin-bottom:1.5rem;" data-page="internship">← 返回实习经历</button>
+            <div class="page-header">
+                <span class="page-tag">Internship</span>
+                <h2 class="page-title">香港学生会内地生联合会</h2>
+                <p class="page-subtitle">活动与推广运营实习生 · 2026.3 – 2026.5 · 公众号推文代表作</p>
+            </div>
+            <div style="background:rgba(20,20,20,0.7);border-radius:1rem;border:1px solid rgba(255,255,255,0.08);padding:2.5rem 2rem;text-align:center;">
+                <div style="font-size:3rem;margin-bottom:1rem;">📱</div>
+                <h3 style="font-family:'Garamond',serif;font-size:1.4rem;font-weight:400;margin-bottom:0.75rem;color:#fff;">公众号推文代表作</h3>
+                <p style="font-size:0.88rem;color:rgba(255,255,255,0.6);line-height:1.75;max-width:520px;margin:0 auto 1.5rem;">实习期间独立撰写并排版多篇活动推文，统筹「IANG Happy Hour」等活动宣发。点击下方按钮阅读完整内容。</p>
+                <a href="https://mp.weixin.qq.com/s/aI2HQMFFF7xNQFjPWkIOJg" target="_blank" rel="noopener" class="external-link-chip" style="font-size:0.85rem;padding:0.5rem 1.5rem;">打开微信公众号文章 ↗</a>
+                <p style="margin-top:1rem;font-size:0.72rem;color:rgba(255,255,255,0.3);">微信公众号文章需在浏览器或微信中打开</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- BIGO -->
+    <div class="page" id="page-internship-bigo">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <button class="pdf-chip" style="margin-bottom:1.5rem;" data-page="internship">← 返回实习经历</button>
+            <div class="page-header">
+                <span class="page-tag">Internship</span>
+                <h2 class="page-title">广州 BIGO 科技有限公司</h2>
+                <p class="page-subtitle">TikTok 内容运营实习生 · 2024.4 – 2024.6 · Hello 语音抖音渠道代表作品</p>
+            </div>
+            <div style="background:rgba(20,20,20,0.7);border-radius:1rem;border:1px solid rgba(255,255,255,0.08);overflow:hidden;">
+                <div style="position:relative;padding-bottom:56.25%;height:0;background:#000;">
+                    <iframe src="https://player.bilibili.com/player.html?bvid=BV1zi421S7ix&page=1&high_quality=1&danmaku=0&autoplay=0&muted=1" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allowfullscreen="true"></iframe>
+                </div>
+                <div style="padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.82rem;color:rgba(255,255,255,0.5);">
+                    <strong style="color:rgba(255,255,255,0.8);">Hello 语音抖音渠道内容运营代表作品</strong> · 视频托管于 B 站
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 华图教育 -->
+    <div class="page" id="page-internship-huatu">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <button class="pdf-chip" style="margin-bottom:1.5rem;" data-page="internship">← 返回实习经历</button>
+            <div class="page-header">
+                <span class="page-tag">Internship</span>
+                <h2 class="page-title">华图教育 · 内容运营与直播运营</h2>
+                <p class="page-subtitle">2023.10 – 2023.12 · 直播运营 · 视频制作 · 代表作品</p>
+            </div>
+            <div style="background:rgba(20,20,20,0.7);border-radius:1rem;border:1px solid rgba(255,255,255,0.08);overflow:hidden;">
+                <div style="position:relative;padding-bottom:56.25%;height:0;background:#000;">
+                    <iframe src="https://player.bilibili.com/player.html?bvid=BV1RRNL6EExJ&page=1&high_quality=1&danmaku=0&autoplay=0&muted=1" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allowfullscreen="true"></iframe>
+                </div>
+                <div style="padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.82rem;color:rgba(255,255,255,0.5);">
+                    <strong style="color:rgba(255,255,255,0.8);">华图教育 · 内容运营代表作品</strong> · 视频托管于 B 站
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DEAl 项目视频 -->
+    <div class="page" id="page-project-deal">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <button class="pdf-chip" style="margin-bottom:1.5rem;" data-page="project">← 返回项目经历</button>
+            <div class="page-header">
+                <span class="page-tag">Product</span>
+                <h2 class="page-title">DEAl 智能约拍平台 · 演示视频</h2>
+                <p class="page-subtitle">AI 驱动的一站式约拍方案 · 全流程产品设计</p>
+            </div>
+            <div style="background:rgba(20,20,20,0.7);border-radius:1rem;border:1px solid rgba(255,255,255,0.08);overflow:hidden;">
+                <div style="position:relative;padding-bottom:56.25%;height:0;background:#000;">
+                    <iframe src="https://player.bilibili.com/player.html?bvid=BV1mEME6HE6W&page=1&high_quality=1&danmaku=0&autoplay=0&muted=1" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allowfullscreen="true"></iframe>
+                </div>
+                <div style="padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.82rem;color:rgba(255,255,255,0.5);">
+                    <strong style="color:rgba(255,255,255,0.8);">DEAl 智能约拍平台 · 产品演示</strong> · 视频托管于 B 站
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 本地生活视频 -->
+    <div class="page" id="page-project-media-local">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <button class="pdf-chip" style="margin-bottom:1.5rem;" data-page="project">← 返回项目经历</button>
+            <div class="page-header">
+                <span class="page-tag">Self-media</span>
+                <h2 class="page-title">本地生活类账号 · 代表作品</h2>
+                <p class="page-subtitle">抖音号 87767809 · 单条最高 4.7 万播放 · 156 单商业化转化</p>
+            </div>
+            <div style="background:rgba(20,20,20,0.7);border-radius:1rem;border:1px solid rgba(255,255,255,0.08);overflow:hidden;">
+                <div style="position:relative;padding-bottom:56.25%;height:0;background:#000;">
+                    <iframe src="https://player.bilibili.com/player.html?bvid=BV1spME6UEb2&page=1&high_quality=1&danmaku=0&autoplay=0&muted=1" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allowfullscreen="true"></iframe>
+                </div>
+                <div style="padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.82rem;color:rgba(255,255,255,0.5);">
+                    <strong style="color:rgba(255,255,255,0.8);">抖音本地生活类账号代表作品</strong> · 视频托管于 B 站
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏分享视频 -->
+    <div class="page" id="page-project-media-game">
+        <div class="page-inner">
+            <div class="accent-strip"></div>
+            <button class="pdf-chip" style="margin-bottom:1.5rem;" data-page="project">← 返回项目经历</button>
+            <div class="page-header">
+                <span class="page-tag">Self-media</span>
+                <h2 class="page-title">游戏分享账号 · 代表作品</h2>
+                <p class="page-subtitle">抖音号 36006825934 · 单条最高 3 万浏览 · 781 赞</p>
+            </div>
+            <div style="background:rgba(20,20,20,0.7);border-radius:1rem;border:1px solid rgba(255,255,255,0.08);overflow:hidden;">
+                <div style="position:relative;padding-bottom:56.25%;height:0;background:#000;">
+                    <iframe src="https://player.bilibili.com/player.html?bvid=BV11pME6UEs8&page=1&high_quality=1&danmaku=0&autoplay=0&muted=1" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allowfullscreen="true"></iframe>
+                </div>
+                <div style="padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.82rem;color:rgba(255,255,255,0.5);">
+                    <strong style="color:rgba(255,255,255,0.8);">游戏分享账号代表作品</strong> · 视频托管于 B 站
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PDF VIEWER ===== -->
+    <div class="page" id="page-pdf">
+        <div class="page-inner">
+            <button class="pdf-chip" style="margin-bottom:1.5rem;" id="pdf-back-btn">← 返回</button>
+            <div class="page-header">
+                <span class="page-tag">Document</span>
+                <h2 class="page-title" id="pdf-title">课程资料</h2>
+            </div>
+            <div style="background:rgba(20,20,20,0.7);border-radius:1rem;border:1px solid rgba(255,255,255,0.08);overflow:hidden;height:calc(100vh - 320px);min-height:400px;">
+                <iframe id="pdf-frame" title="PDF 预览" style="width:100%;height:100%;border:none;"></iframe>
+            </div>
+            <button class="pdf-chip" style="margin-top:1rem;" id="pdf-open-tab">若无法预览，点击在新窗口打开 PDF</button>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== SCRIPT ===== -->
+    <!-- ============================================================ -->
+    <script>
+        (function() {
+            // ----- 页面切换 -----
+            const pageMap = {
+                home: document.getElementById('page-home'),
+                education: document.getElementById('page-education'),
+                internship: document.getElementById('page-internship'),
+                project: document.getElementById('page-project'),
+                contact: document.getElementById('page-contact'),
+                'data-viz': document.getElementById('page-data-viz'),
+                datajournalism: document.getElementById('page-datajournalism'),
+                'education-publicity': document.getElementById('page-education-publicity'),
+                'internship-dagongwen': document.getElementById('page-internship-dagongwen'),
+                'internship-hksu': document.getElementById('page-internship-hksu'),
+                'internship-bigo': document.getElementById('page-internship-bigo'),
+                'internship-huatu': document.getElementById('page-internship-huatu'),
+                'project-deal': document.getElementById('page-project-deal'),
+                'project-media-local': document.getElementById('page-project-media-local'),
+                'project-media-game': document.getElementById('page-project-media-game'),
+                pdf: document.getElementById('page-pdf'),
+            };
+            const mainPages = ['home', 'education', 'internship', 'project', 'contact'];
+            const desktopLinks = document.querySelectorAll('#desktopLinks a');
+            const mobileLinks = document.querySelectorAll('#mobileMenu a');
+            const brandLink = document.getElementById('brandLink');
+            const exploreBtn = document.getElementById('exploreBtn');
+            let lastPage = 'home';
+            let pdfReturnPage = 'education';
+
+            function setActivePage(pageId) {
+                if (!pageMap[pageId]) return;
+                // 隐藏所有页面
+                Object.values(pageMap).forEach(p => { if (p) p.classList.remove('active'); });
+                // 显示目标
+                pageMap[pageId].classList.add('active');
+
+                // 更新导航高亮（仅主页面）
+                desktopLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.dataset.page === pageId && mainPages.includes(pageId)) {
+                        link.classList.add('active');
+                    }
+                });
+
+                // 关闭移动菜单
+                closeMenuFunc();
+
+                // 叠加层颜色
+                const overlay = document.getElementById('overlay');
+                const colors = {
+                    home: 'rgba(0,0,0,0.65)',
+                    education: 'linear-gradient(135deg, rgba(212,255,53,0.08), rgba(0,0,0,0.8))',
+                    internship: 'linear-gradient(135deg, rgba(123,92,255,0.08), rgba(0,0,0,0.8))',
+                    project: 'linear-gradient(135deg, rgba(46,196,212,0.08), rgba(0,0,0,0.8))',
+                    contact: 'linear-gradient(135deg, rgba(255,126,179,0.08), rgba(0,0,0,0.8))',
+                };
+                overlay.style.background = colors[pageId] || 'rgba(0,0,0,0.7)';
+
+                // 记录返回页
+                if (mainPages.includes(pageId)) lastPage = pageId;
+
+                window.scrollTo(0, 0);
+            }
+
+            // 导航点击
+            document.addEventListener('click', function(e) {
+                const target = e.target.closest('[data-page]');
+                if (target) {
+                    const page = target.dataset.page;
+                    if (pageMap[page]) {
+                        e.preventDefault();
+                        setActivePage(page);
+                    }
+                }
+            });
+
+            // 品牌点击回首页
+            brandLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                setActivePage('home');
+            });
+
+            // 探索按钮
+            if (exploreBtn) {
+                exploreBtn.addEventListener('click', function() {
+                    setActivePage('project');
+                });
+            }
+
+            // PDF 展示
+            window.showPdf = function(src, title, returnPage) {
+                pdfReturnPage = returnPage || lastPage;
+                document.getElementById('pdf-frame').src = src;
+                document.getElementById('pdf-title').textContent = title || '课程资料';
+                document.getElementById('pdf-open-tab').onclick = function() {
+                    window.open(src, '_blank');
+                };
+                setActivePage('pdf');
+            };
+
+            document.getElementById('pdf-back-btn').addEventListener('click', function() {
+                setActivePage(pdfReturnPage);
+            });
+
+            // ----- 移动菜单 -----
+            const menuToggle = document.getElementById('menuToggle');
+            const closeMenuBtn = document.getElementById('closeMenu');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+            function openMenu() {
+                mobileMenu.classList.add('active');
+                mobileMenuLinks.forEach(function(link, i) {
+                    link.style.animationDelay = (0.05 + i * 0.06) + 's';
+                });
+            }
+
+            function closeMenuFunc() {
+                mobileMenu.classList.remove('active');
+                mobileMenuLinks.forEach(function(link) {
+                    link.style.animationDelay = '0s';
+                });
+            }
+
+            menuToggle.addEventListener('click', openMenu);
+            closeMenuBtn.addEventListener('click', closeMenuFunc);
+            document.addEventListener('click', function(e) {
+                if (!mobileMenu.contains(e.target) && e.target !== menuToggle && !menuToggle.contains(e.target)) {
+                    closeMenuFunc();
+                }
+            });
+
+            // ----- 首页逐字动画 -----
+            function setupStaggeredFade(elementId) {
+                const line = document.getElementById(elementId);
+                if (!line) return;
+                const text = line.textContent || '';
+                line.textContent = '';
+                const chars = text.split('');
+                chars.forEach(function(char, i) {
+                    const span = document.createElement('span');
+                    span.className = 'char';
+                    span.textContent = char === ' ' ? '\u00A0' : char;
+                    span.style.animationDelay = (i * 0.06) + 's';
+                    line.appendChild(span);
+                });
+            }
+            setupStaggeredFade('line1');
+            setupStaggeredFade('line2');
+
+            // 触发可见
+            const mainTitle = document.getElementById('mainTitle');
+            if (mainTitle) {
+                const observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            const chars = mainTitle.querySelectorAll('.char');
+                            chars.forEach(function(char) {
+                                char.classList.add('visible');
+                            });
+                            observer.unobserve(mainTitle);
+                        }
+                    });
+                }, { threshold: 0.3 });
+                observer.observe(mainTitle);
+                // 备用：如果已经可见
+                setTimeout(function() {
+                    const chars = mainTitle.querySelectorAll('.char');
+                    if (chars.length > 0 && !chars[0].classList.contains('visible')) {
+                        chars.forEach(function(char) {
+                            char.classList.add('visible');
+                        });
+                    }
+                }, 800);
+            }
+
+            // 默认显示首页
+            setActivePage('home');
+        })();
+    </script>
+
+</body>
+</html>
